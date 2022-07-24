@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 import 'firebase_options.dart';
@@ -24,11 +25,16 @@ class MyApp extends StatelessWidget {
       child: Builder(
         builder: (context) {
           final router = context.read<MyRoute>().data;
-          return MaterialApp.router(
-            debugShowCheckedModeBanner: false,
-            routeInformationParser: router.routeInformationParser,
-            routerDelegate: router.routerDelegate,
-            routeInformationProvider: router.routeInformationProvider,
+          return ScreenUtilInit(
+            minTextAdapt: true,
+            splitScreenMode: true,
+            designSize: const Size(393, 786),
+            builder: (_, __) => MaterialApp.router(
+              debugShowCheckedModeBanner: false,
+              routeInformationParser: router.routeInformationParser,
+              routerDelegate: router.routerDelegate,
+              routeInformationProvider: router.routeInformationProvider,
+            ),
           );
         },
       ),
