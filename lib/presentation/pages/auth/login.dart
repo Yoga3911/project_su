@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:project/data/models/user_model.dart';
 
 class LoginPage extends StatelessWidget {
-  final String name;
+  final UserModel user;
   const LoginPage({
     super.key,
-    required this.name,
+    required this.user,
   });
 
   static const routeName = "login_page";
@@ -13,7 +15,12 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text(name),
+        child: Text(
+          user.name,
+          style: TextStyle(
+            fontSize: 16.sp,
+          ),
+        ),
       ),
     );
   }
