@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:project/data/models/user_model.dart';
 import 'package:project/presentation/pages/auth/login.dart';
 import 'package:project/presentation/pages/auth/register.dart';
 
@@ -20,12 +19,7 @@ class LandingPage extends StatelessWidget {
               onPressed: () {
                 context.goNamed(
                   LoginPage.routeName,
-                  extra: UserModel.fromJson(
-                    {
-                      "name": "Eaaa",
-                      "address": "Jl",
-                    },
-                  ),
+                  params: {"name": "ekoo"}
                 );
               },
               child: const Text("Masuk"),
