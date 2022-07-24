@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:project/presentation/pages/auth/login.dart';
 import 'package:project/presentation/pages/auth/register.dart';
 import 'package:project/presentation/widgets/main.dart';
+import 'package:project/utils/error_page.dart';
 
 class MyRoute {
   static final _single = MyRoute._();
@@ -19,11 +20,14 @@ class MyRoute {
   late final data = GoRouter(
     debugLogDiagnostics: true,
     initialLocation: root,
+    routerNeglect: true,
     routes: <GoRoute>[
       GoRoute(
         path: root,
         name: routeName,
-        redirect: (state) => state.namedLocation(MainPage.routeName),
+        redirect: (state) => state.namedLocation(
+          LoginPage.routeName,
+        ),
       ),
       GoRoute(
         path: login,
@@ -50,5 +54,11 @@ class MyRoute {
         ),
       ),
     ],
+    errorPageBuilder: (_, state) => MaterialPage(
+      key: state.pageKey,
+      child: ErrorPage(
+        exception: state.error!,
+      ),
+    ),
   );
 }
