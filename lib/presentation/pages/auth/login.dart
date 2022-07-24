@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../data/models/user_model.dart';
 
 class LoginPage extends StatelessWidget {
-  final UserModel user;
+  final String user;
   const LoginPage({
     super.key,
     required this.user,
@@ -17,7 +16,7 @@ class LoginPage extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: Text(
-          user.name,
+          user,
           style: TextStyle(
             fontSize: 16.sp,
           ),
