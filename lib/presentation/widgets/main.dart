@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:project/presentation/pages/auth/login.dart';
-import 'package:project/presentation/pages/auth/register.dart';
-import 'package:project/presentation/providers/page_provider.dart';
-import 'package:project/presentation/widgets/sidebar.dart';
 import 'package:provider/provider.dart';
+
+import '../../presentation/pages/auth/register.dart';
+import '../../presentation/providers/page_provider.dart';
+import '../../presentation/widgets/sidebar.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -63,7 +63,7 @@ class _MainPageState extends State<MainPage>
               builder: (_, notifier, __) => IndexedStack(
                 index: notifier.getIndex,
                 children: const [
-                  LoginPage(),
+                  // LoginPage(),
                   RegisterPage(),
                 ],
               ),
