@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:project/presentation/providers/page_provider.dart';
 import 'package:provider/provider.dart';
+
+import '../../presentation/providers/page_provider.dart';
 
 class MySideNavbar extends StatelessWidget {
   const MySideNavbar({super.key});
