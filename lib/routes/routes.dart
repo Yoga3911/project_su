@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:project/data/models/user_model.dart';
 
 import '../presentation/pages/auth/login.dart';
 import '../presentation/pages/auth/register.dart';
@@ -19,7 +20,7 @@ class MyRoute {
 
   //! AUTH
   static const landing = "/auth";
-  static const login = "login/:name";
+  static const login = "login";
   static const register = "register";
 
   //! MAIN
@@ -55,7 +56,7 @@ class MyRoute {
                 child: child,
               ),
               child: LoginPage(
-                name: state.params["name"] ?? "Kosong",
+                user: state.extra as UserModel,
               ),
             ),
           ),
