@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:project/presentation/pages/auth/login.dart';
-import 'package:project/presentation/pages/auth/register.dart';
-import 'package:project/presentation/widgets/main.dart';
-import 'package:project/utils/error_page.dart';
+
+import '../presentation/pages/auth/login.dart';
+import '../presentation/pages/auth/register.dart';
+import '../presentation/pages/landing/landing.dart';
+import '../presentation/widgets/main.dart';
+import '../utils/error_page.dart';
 
 class MyRoute {
   static final _single = MyRoute._();
@@ -12,10 +14,16 @@ class MyRoute {
 
   static const routeName = "root";
 
+  //! ROOT
   static const root = "/";
+
+  //! AUTH
+  static const landing = "/auth";
+  static const login = "login/:name";
+  static const register = "register";
+
+  //! MAIN
   static const main = "/main";
-  static const login = "/auth/login";
-  static const register = "/auth/register";
 
   late final data = GoRouter(
     debugLogDiagnostics: true,
@@ -26,30 +34,54 @@ class MyRoute {
         path: root,
         name: routeName,
         redirect: (state) => state.namedLocation(
-          LoginPage.routeName,
+          LandingPage.routeName,
         ),
       ),
       GoRoute(
-        path: login,
-        name: LoginPage.routeName,
+        path: landing,
+        name: LandingPage.routeName,
         pageBuilder: (_, state) => MaterialPage(
           key: state.pageKey,
-          child: const LoginPage(),
+          child: const LandingPage(),
         ),
-      ),
-      GoRoute(
-        path: register,
-        name: RegisterPage.routeName,
-        pageBuilder: (_, state) => MaterialPage(
-          key: state.pageKey,
-          child: const RegisterPage(),
-        ),
+        routes: [
+          GoRoute(
+            path: login,
+            name: LoginPage.routeName,
+            pageBuilder: (_, state) => CustomTransitionPage(
+              key: state.pageKey,
+              transitionsBuilder: (_, animation, __, child) => FadeTransition(
+                opacity: animation,
+                child: child,
+              ),
+              child: LoginPage(
+                name: state.params["name"] ?? "Kosong",
+              ),
+            ),
+          ),
+          GoRoute(
+            path: register,
+            name: RegisterPage.routeName,
+            pageBuilder: (_, state) => CustomTransitionPage(
+              key: state.pageKey,
+              transitionsBuilder: (_, animation, __, child) => FadeTransition(
+                opacity: animation,
+                child: child,
+              ),
+              child: const RegisterPage(),
+            ),
+          ),
+        ],
       ),
       GoRoute(
         path: main,
         name: MainPage.routeName,
-        pageBuilder: (_, state) => MaterialPage(
+        pageBuilder: (_, state) => CustomTransitionPage(
           key: state.pageKey,
+          transitionsBuilder: (_, animation, __, child) => FadeTransition(
+            opacity: animation,
+            child: child,
+          ),
           child: const MainPage(),
         ),
       ),
