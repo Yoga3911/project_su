@@ -8,7 +8,9 @@ import 'routes/routes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -19,10 +21,16 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: MyProvider.data,
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        routes: MyRoute.data,
-        initialRoute: MyRoute.main,
+      child: Builder(
+        builder: (context) {
+          final router = context.read<MyRoute>().data;
+          return MaterialApp.router(
+            debugShowCheckedModeBanner: false,
+            routeInformationParser: router.routeInformationParser,
+            routerDelegate: router.routerDelegate,
+            routeInformationProvider: router.routeInformationProvider,
+          );
+        },
       ),
     );
   }
