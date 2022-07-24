@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:project/data/models/user_model.dart';
+
+import '../../../data/models/user_model.dart';
 
 class LoginPage extends StatelessWidget {
   final UserModel user;
