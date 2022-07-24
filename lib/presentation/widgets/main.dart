@@ -8,20 +8,28 @@ import 'package:provider/provider.dart';
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
 
+  static const routeName = "main-page";
+
   @override
   State<MainPage> createState() => _MainPageState();
 }
 
 class _MainPageState extends State<MainPage>
     with SingleTickerProviderStateMixin {
-  late AnimationController controller = AnimationController(
+  late final AnimationController _controller = AnimationController(
     vsync: this,
     duration: const Duration(
       milliseconds: 400,
     ),
   );
 
-  bool isExpand = false;
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  bool _isExpand = false;
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -34,19 +42,19 @@ class _MainPageState extends State<MainPage>
             curve: Curves.easeInOutSine,
             child: SizedBox(
               height: size.height,
-              width: (isExpand) ? size.width * 0.2 : 0,
-              child: (isExpand) ? const MySideNavbar() : null,
+              width: (_isExpand) ? size.width * 0.2 : 0,
+              child: (_isExpand) ? const MySideNavbar() : null,
             ),
           ),
           IconButton(
             splashRadius: 15,
             icon: AnimatedIcon(
               icon: AnimatedIcons.menu_close,
-              progress: controller,
+              progress: _controller,
             ),
             onPressed: () {
-              isExpand = !isExpand;
-              isExpand ? controller.forward() : controller.reverse();
+              _isExpand = !_isExpand;
+              _isExpand ? _controller.forward() : _controller.reverse();
               setState(() {});
             },
           ),
