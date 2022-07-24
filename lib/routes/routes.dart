@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:project/data/models/user_model.dart';
 
 import '../presentation/pages/auth/login.dart';
 import '../presentation/pages/auth/register.dart';
@@ -12,7 +11,6 @@ class MyRoute {
   static final _single = MyRoute._();
   MyRoute._();
   factory MyRoute() => _single;
-
   static const routeName = "root";
 
   //! ROOT
@@ -20,7 +18,7 @@ class MyRoute {
 
   //! AUTH
   static const landing = "/auth";
-  static const login = "login";
+  static const login = "login/:name";
   static const register = "register";
 
   //! MAIN
@@ -56,7 +54,7 @@ class MyRoute {
                 child: child,
               ),
               child: LoginPage(
-                user: state.extra as UserModel,
+                user: state.params["name"]?? "NO DATA",
               ),
             ),
           ),
