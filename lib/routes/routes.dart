@@ -11,6 +11,7 @@ class MyRoute {
   static final _single = MyRoute._();
   MyRoute._();
   factory MyRoute() => _single;
+  
   static const routeName = "root";
 
   //! ROOT
