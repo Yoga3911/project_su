@@ -34,7 +34,7 @@ class EmailService extends SocialService {
   @override
   Future<dynamic> signIn({required LoginModel loginModel}) async {
     try {
-      final user = await FirebaseAuth.instance.signInAnonymously();
+      await FirebaseAuth.instance.signInAnonymously();
       final data = await MyCollection.users
           .where("username", isEqualTo: loginModel.username)
           .get() as QuerySnapshot<Map<String, dynamic>>;
@@ -47,16 +47,7 @@ class EmailService extends SocialService {
 
       final userModel = UserModel.fromJson(data.docs.first.data());
 
-      return UserModel(
-        userId: userModel.userId,
-        isAdmin: userModel.isAdmin,
-        username: userModel.username,
-        password: userModel.password,
-        desaId: userModel.desaId,
-        fullName: userModel.fullName,
-        createdAt: userModel.createdAt,
-        updatedAt: userModel.updatedAt,
-      );
+      return userModel;
     } catch (e) {
       log(e.toString());
       return e.toString();

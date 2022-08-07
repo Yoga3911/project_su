@@ -8,7 +8,6 @@ class UserModel with _$UserModel {
     required String userId,
     required String username,
     required String password,
-    required int desaId,
     required bool isAdmin,
     required String fullName,
     required int createdAt,

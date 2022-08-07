@@ -23,7 +23,6 @@ mixin _$UserModel {
   String get userId => throw _privateConstructorUsedError;
   String get username => throw _privateConstructorUsedError;
   String get password => throw _privateConstructorUsedError;
-  int get desaId => throw _privateConstructorUsedError;
   bool get isAdmin => throw _privateConstructorUsedError;
   String get fullName => throw _privateConstructorUsedError;
   int get createdAt => throw _privateConstructorUsedError;
@@ -43,7 +42,6 @@ abstract class $UserModelCopyWith<$Res> {
       {String userId,
       String username,
       String password,
-      int desaId,
       bool isAdmin,
       String fullName,
       int createdAt,
@@ -63,7 +61,6 @@ class _$UserModelCopyWithImpl<$Res> implements $UserModelCopyWith<$Res> {
     Object? userId = freezed,
     Object? username = freezed,
     Object? password = freezed,
-    Object? desaId = freezed,
     Object? isAdmin = freezed,
     Object? fullName = freezed,
     Object? createdAt = freezed,
@@ -82,10 +79,6 @@ class _$UserModelCopyWithImpl<$Res> implements $UserModelCopyWith<$Res> {
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
               as String,
-      desaId: desaId == freezed
-          ? _value.desaId
-          : desaId // ignore: cast_nullable_to_non_nullable
-              as int,
       isAdmin: isAdmin == freezed
           ? _value.isAdmin
           : isAdmin // ignore: cast_nullable_to_non_nullable
@@ -116,7 +109,6 @@ abstract class _$$_UserModelCopyWith<$Res> implements $UserModelCopyWith<$Res> {
       {String userId,
       String username,
       String password,
-      int desaId,
       bool isAdmin,
       String fullName,
       int createdAt,
@@ -138,7 +130,6 @@ class __$$_UserModelCopyWithImpl<$Res> extends _$UserModelCopyWithImpl<$Res>
     Object? userId = freezed,
     Object? username = freezed,
     Object? password = freezed,
-    Object? desaId = freezed,
     Object? isAdmin = freezed,
     Object? fullName = freezed,
     Object? createdAt = freezed,
@@ -157,10 +148,6 @@ class __$$_UserModelCopyWithImpl<$Res> extends _$UserModelCopyWithImpl<$Res>
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
               as String,
-      desaId: desaId == freezed
-          ? _value.desaId
-          : desaId // ignore: cast_nullable_to_non_nullable
-              as int,
       isAdmin: isAdmin == freezed
           ? _value.isAdmin
           : isAdmin // ignore: cast_nullable_to_non_nullable
@@ -188,7 +175,6 @@ class _$_UserModel implements _UserModel {
       {required this.userId,
       required this.username,
       required this.password,
-      required this.desaId,
       required this.isAdmin,
       required this.fullName,
       required this.createdAt,
@@ -204,8 +190,6 @@ class _$_UserModel implements _UserModel {
   @override
   final String password;
   @override
-  final int desaId;
-  @override
   final bool isAdmin;
   @override
   final String fullName;
@@ -216,7 +200,7 @@ class _$_UserModel implements _UserModel {
 
   @override
   String toString() {
-    return 'UserModel(userId: $userId, username: $username, password: $password, desaId: $desaId, isAdmin: $isAdmin, fullName: $fullName, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'UserModel(userId: $userId, username: $username, password: $password, isAdmin: $isAdmin, fullName: $fullName, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -227,7 +211,6 @@ class _$_UserModel implements _UserModel {
             const DeepCollectionEquality().equals(other.userId, userId) &&
             const DeepCollectionEquality().equals(other.username, username) &&
             const DeepCollectionEquality().equals(other.password, password) &&
-            const DeepCollectionEquality().equals(other.desaId, desaId) &&
             const DeepCollectionEquality().equals(other.isAdmin, isAdmin) &&
             const DeepCollectionEquality().equals(other.fullName, fullName) &&
             const DeepCollectionEquality().equals(other.createdAt, createdAt) &&
@@ -241,7 +224,6 @@ class _$_UserModel implements _UserModel {
       const DeepCollectionEquality().hash(userId),
       const DeepCollectionEquality().hash(username),
       const DeepCollectionEquality().hash(password),
-      const DeepCollectionEquality().hash(desaId),
       const DeepCollectionEquality().hash(isAdmin),
       const DeepCollectionEquality().hash(fullName),
       const DeepCollectionEquality().hash(createdAt),
@@ -265,7 +247,6 @@ abstract class _UserModel implements UserModel {
       {required final String userId,
       required final String username,
       required final String password,
-      required final int desaId,
       required final bool isAdmin,
       required final String fullName,
       required final int createdAt,
@@ -280,8 +261,6 @@ abstract class _UserModel implements UserModel {
   String get username;
   @override
   String get password;
-  @override
-  int get desaId;
   @override
   bool get isAdmin;
   @override
