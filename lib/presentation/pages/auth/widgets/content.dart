@@ -58,7 +58,7 @@ class LandingContent extends StatelessWidget {
               ),
               SizedBox(height: 15.h),
               Text(
-                "Nama Perusahaan",
+                "Sari Nikmat",
                 style: TextStyle(
                   fontFamily: MyFont.regular,
                   fontSize: 16.sp,
