@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:project/constants/fonts.dart';
 import 'package:project/presentation/providers/textfield_provider.dart';
 import 'package:project/presentation/providers/user_provider.dart';
 import 'package:project/utils/loading.dart';
@@ -63,7 +64,7 @@ class ForgotPasswordDialog extends StatelessWidget {
       alignment: Alignment.center,
       children: [
         Container(
-          width: size.width * 0.85,
+          width: size.width * 0.5,
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
           decoration: BoxDecoration(
             color: Colors.white,
@@ -76,7 +77,13 @@ class ForgotPasswordDialog extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Text("Lupa Kata Sandi"),
+                Text(
+                  "Lupa Kata Sandi",
+                  style: TextStyle(
+                    fontFamily: MyFont.semiBold,
+                    fontSize: 24.sp,
+                  ),
+                ),
                 SizedBox(height: 10.h),
                 CustomTextField(
                   icon: Icons.person_rounded,
@@ -99,6 +106,7 @@ class ForgotPasswordDialog extends StatelessWidget {
                   controller: txtField.getPassword3,
                   helper: null,
                 ),
+                SizedBox(height: 30.h),
                 Center(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -108,6 +116,10 @@ class ForgotPasswordDialog extends StatelessWidget {
                         style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5),
+                          ),
+                          padding: EdgeInsets.symmetric(
+                            vertical: 20.h,
+                            horizontal: 10.w,
                           ),
                           primary: Colors.grey,
                         ),
@@ -165,6 +177,10 @@ class ForgotPasswordDialog extends StatelessWidget {
                         style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5),
+                          ),
+                          padding: EdgeInsets.symmetric(
+                            vertical: 20.h,
+                            horizontal: 10.w,
                           ),
                         ),
                         child: const Text("Konfirmasi"),

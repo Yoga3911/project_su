@@ -1,7 +1,9 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:project/constants/fonts.dart';
 import 'package:project/data/models/auth/login_model.dart';
+import 'package:project/presentation/pages/auth/widgets/dialog_lupa_password.dart';
 import 'package:project/presentation/providers/auth_provider.dart';
 import 'package:project/presentation/providers/textfield_provider.dart';
 import 'package:project/presentation/providers/user_provider.dart';
@@ -82,18 +84,17 @@ class LoginForm extends StatelessWidget {
         SizedBox(height: 15.h),
         Align(
           alignment: Alignment.centerRight,
-          child: GestureDetector(
-            onTap: () {
-              // showDialog(
-              //   barrierDismissible: false,
-              //   context: context,
-              //   builder: (_) => ForgotPasswordDialog(
-              //     txtField: txtField,
-              //   ),
-              // );
-            },
-            child: Text(
-              "Lupa kata sandi?",
+          child: Text.rich(
+            TextSpan(
+              text: "Lupa kata sandi?",
+              recognizer: TapGestureRecognizer()
+                ..onTap = () => showDialog(
+                      barrierDismissible: false,
+                      context: context,
+                      builder: (_) => ForgotPasswordDialog(
+                        txtField: txtField,
+                      ),
+                    ),
               style: text.headline5,
             ),
           ),
