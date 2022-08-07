@@ -39,7 +39,6 @@ class AuthProvider with ChangeNotifier {
     }
     final pref = await SharedPreferences.getInstance();
     pref.setString("userId", (data as UserModel).userId);
-    pref.setString("loginToken", (data).loginToken);
     pref.setString("userData", jsonEncode(data));
     return data;
   }

@@ -65,32 +65,23 @@ class UserService {
 
   Future<bool> checkData({
     required String username,
-    required String nik,
     required String password,
   }) async {
     final data = await getDataByUsername(
       username: username,
     );
 
-    if (data is UserModel) {
-      if (data.nik != nik) {
-        return false;
-      }
-
-      try {
-        MyCollection.users.doc(data.userId).update(
-              UserForgotPassword(
-                password: hashPass(password),
-                updatedAt: DateTime.now().millisecondsSinceEpoch,
-              ).toJson(),
-            );
-        return true;
-      } catch (e) {
-        log(e.toString());
-        return false;
-      }
+    try {
+      MyCollection.users.doc(data.userId).update(
+            UserForgotPassword(
+              password: hashPass(password),
+              updatedAt: DateTime.now().millisecondsSinceEpoch,
+            ).toJson(),
+          );
+      return true;
+    } catch (e) {
+      log(e.toString());
+      return false;
     }
-
-    return false;
   }
 }

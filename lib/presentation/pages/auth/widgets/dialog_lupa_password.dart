@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:project/presentation/providers/textfield_provider.dart';
@@ -18,8 +17,7 @@ class ForgotPasswordDialog extends StatelessWidget {
   Future<bool> validasi(BuildContext context) async {
     if (txtField.getUsername2.text.isEmpty ||
         txtField.getPassword2.text.isEmpty ||
-        txtField.getPassword3.text.isEmpty ||
-        txtField.getNIK.text.isEmpty) {
+        txtField.getPassword3.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text("Tidak boleh ada data yang kosong"),
@@ -56,7 +54,6 @@ class ForgotPasswordDialog extends StatelessWidget {
     txtField.getUsername2.clear();
     txtField.getPassword2.clear();
     txtField.getPassword3.clear();
-    txtField.getNIK.clear();
   }
 
   @override
@@ -87,14 +84,6 @@ class ForgotPasswordDialog extends StatelessWidget {
                   isSecure: false,
                   controller: txtField.getUsername2,
                   helper: null,
-                ),
-                CustomTextField(
-                  icon: Icons.person_rounded,
-                  label: "NIK",
-                  isSecure: false,
-                  controller: txtField.getNIK,
-                  helper: null,
-                  type: TextInputType.number,
                 ),
                 CustomTextField(
                   icon: Icons.lock_rounded,
@@ -142,7 +131,6 @@ class ForgotPasswordDialog extends StatelessWidget {
                                   .read<UserProvider>()
                                   .forgotPassword(
                                     username: txtField.getUsername2.text,
-                                    nik: txtField.getNIK.text,
                                     password: txtField.getPassword2.text,
                                   )
                                   .then(

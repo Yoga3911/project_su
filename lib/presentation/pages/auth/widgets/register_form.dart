@@ -84,12 +84,6 @@ class RegisterForm extends StatelessWidget {
           RegisterModel(
             username: txtField.getUsername.text,
             password: hashPass(txtField.getPassword1.text),
-            desaId: context
-                    .read<TextFieldRegisterProvider>()
-                    .getDataDesa
-                    .indexOf(txtField.getDesa.text) +
-                1,
-            image: "-",
             createdAt: date,
             updatedAt: date,
           ),

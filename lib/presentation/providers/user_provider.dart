@@ -44,12 +44,10 @@ class UserProvider with ChangeNotifier {
 
   Future<bool> forgotPassword({
     required String username,
-    required String nik,
     required String password,
   }) async {
     return await _userService.checkData(
       username: username,
-      nik: nik,
       password: password,
     );
   }

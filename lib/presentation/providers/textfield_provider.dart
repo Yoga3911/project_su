@@ -9,7 +9,6 @@ class TextFieldLoginProvider with ChangeNotifier {
   late TextEditingController _username;
   late TextEditingController _password;
   late TextEditingController _username2;
-  late TextEditingController _nik;
   late TextEditingController _password2;
   late TextEditingController _password3;
 
@@ -19,7 +18,6 @@ class TextFieldLoginProvider with ChangeNotifier {
     _username2 = TextEditingController();
     _password2 = TextEditingController();
     _password3 = TextEditingController();
-    _nik = TextEditingController();
   }
 
   @override
@@ -27,7 +25,6 @@ class TextFieldLoginProvider with ChangeNotifier {
     _username.dispose();
     _password.dispose();
     _username2.dispose();
-    _nik.dispose();
     _password2.dispose();
     _password3.dispose();
     super.dispose();
@@ -38,7 +35,6 @@ class TextFieldLoginProvider with ChangeNotifier {
   TextEditingController get getPassword2 => _password2;
   TextEditingController get getPassword3 => _password3;
   TextEditingController get getUsername2 => _username2;
-  TextEditingController get getNIK => _nik;
 }
 
 //! REGISTER
@@ -46,20 +42,11 @@ class TextFieldRegisterProvider with ChangeNotifier {
   late TextEditingController _username;
   late TextEditingController _password1;
   late TextEditingController _password2;
-  late TextEditingController _desa;
-
-  late bool _isTap;
-  late List<String> _dataDesa;
 
   TextFieldRegisterProvider() {
     _username = TextEditingController();
     _password1 = TextEditingController();
     _password2 = TextEditingController();
-    _desa = TextEditingController();
-    _desa.text = "Pilih Desa";
-
-    _isTap = false;
-    _dataDesa = ["Kemiri", "Pakis", "Suci", "Panti"];
   }
 
   @override
@@ -67,30 +54,12 @@ class TextFieldRegisterProvider with ChangeNotifier {
     _username.dispose();
     _password1.dispose();
     _password2.dispose();
-    _desa.dispose();
     super.dispose();
   }
 
   TextEditingController get getUsername => _username;
   TextEditingController get getPassword1 => _password1;
   TextEditingController get getPassword2 => _password2;
-  TextEditingController get getDesa => _desa;
-  List<String> get getDataDesa {
-    _dataDesa.sort((a, b) => a.compareTo(b));
-    return _dataDesa;
-  }
-
-  set setDesa(String val) {
-    _desa.text = val;
-    notifyListeners();
-  }
-
-  set setIsTap(bool val) {
-    _isTap = val;
-    notifyListeners();
-  }
-
-  bool get getIsTap => _isTap;
 }
 
 //! EDIT PROFILE
@@ -191,19 +160,5 @@ class TextFieldProfileProvider with ChangeNotifier {
   void fillData(UserProvider userProvider, {String? alasan}) {
     final user = userProvider.getUser;
     user!.fullName != "-" ? _fullName.text = user.fullName : null;
-    user.nik != "-" ? _nik.text = user.nik : null;
-    user.address != "-" ? _address.text = user.address : null;
-    user.telpon != "-" ? _telpon.text = user.telpon : null;
-    user.birthPlace != "-" ? _birthPlace.text = user.birthPlace : null;
-    final date = DateTime.fromMillisecondsSinceEpoch(user.birthDate);
-    user.birthDate != 0
-        ? _birthDate.text =
-            DateFormat("EEEE, dd-MMMM-yyyy", "in_ID").format(date)
-        : null;
-    user.birthDate != 0 ? setDateData = date : null;
-    user.gender != "-" ? _gender.text = user.gender : null;
-    if (alasan != null) {
-      _alasan.text = alasan;
-    }
   }
 }
