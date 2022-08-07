@@ -39,7 +39,7 @@ class RegisterPage extends StatelessWidget {
                 const AnimasiBintang(),
                 Padding(
                   padding: EdgeInsets.symmetric(
-                    horizontal: 10.w,
+                    horizontal: 100.w,
                     vertical: 10.h,
                   ),
                   child: ScrollConfiguration(

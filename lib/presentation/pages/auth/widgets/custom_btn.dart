@@ -19,12 +19,13 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Hero(
       tag: tag,
       child: Container(
         height: 50.h,
-        margin:  EdgeInsets.symmetric(horizontal: 20.w),
-        width: double.infinity,
+        margin: EdgeInsets.symmetric(horizontal: 20.w),
+        width: size.width * 0.4,
         decoration: BoxDecoration(
           color: color,
           borderRadius: BorderRadius.circular(10),
