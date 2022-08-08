@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:project/data/models/user/user_model.dart';
 import 'package:project/services/user_service.dart';
@@ -20,6 +21,7 @@ class UserProvider with ChangeNotifier {
   UserModel? get getUser => _user;
 
   Future<void> getById() async {
+    await FirebaseAuth.instance.signInAnonymously();
     final pref = await SharedPreferences.getInstance();
     final user = await _userService.getById(userId: pref.getString("userId")!);
     setUser = user;
