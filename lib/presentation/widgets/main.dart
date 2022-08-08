@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:project/presentation/pages/auth/landing.dart';
 import 'package:project/presentation/pages/auth/login.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../presentation/pages/auth/register.dart';
 import '../../presentation/providers/page_provider.dart';
@@ -23,6 +26,23 @@ class _MainPageState extends State<MainPage>
       milliseconds: 400,
     ),
   );
+
+  Future<void> checkLogin() async {
+    final pref = await SharedPreferences.getInstance();
+    if (pref.getString("userId") == null) {
+      goToLanding();
+    }
+  }
+
+  void goToLanding() {
+    context.replaceNamed(LandingPage.routeName);
+  }
+
+  @override
+  void initState() {
+    checkLogin();
+    super.initState();
+  }
 
   @override
   void dispose() {

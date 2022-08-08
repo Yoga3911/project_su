@@ -1,14 +1,24 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:project/constants/color.dart';
 import 'package:project/constants/fonts.dart';
+import 'package:project/presentation/pages/auth/landing.dart';
 import 'package:project/presentation/providers/user_provider.dart';
+import 'package:project/utils/loading.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../presentation/providers/page_provider.dart';
 
 class MySideNavbar extends StatelessWidget {
   const MySideNavbar({super.key});
+
+  Future<void> clearStorage() async {
+    final pref = await SharedPreferences.getInstance();
+    pref.clear();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -140,56 +150,80 @@ class MySideNavbar extends StatelessWidget {
               ),
             ),
             FutureBuilder(
-                future: context.read<UserProvider>().getById(),
-                builder: (_, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const SizedBox();
-                  }
-                  final user = context.read<UserProvider>().getUser!;
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          CircleAvatar(
-                            radius: 30.r,
-                            backgroundColor: Colors.white,
-                            backgroundImage: user.isAdmin
-                                ? const AssetImage("assets/images/admin.png")
-                                : const AssetImage("assets/images/profile.png"),
-                          ),
-                          SizedBox(width: 5.w),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                user.username,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontFamily: MyFont.semiBold,
-                                  fontSize: 18.sp,
-                                ),
+              future: context.read<UserProvider>().getById(),
+              builder: (_, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const SizedBox();
+                }
+                final user = context.read<UserProvider>().getUser!;
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        CircleAvatar(
+                          radius: 30.r,
+                          backgroundColor: Colors.white,
+                          backgroundImage: user.isAdmin
+                              ? const AssetImage("assets/images/admin.png")
+                              : const AssetImage("assets/images/profile.png"),
+                        ),
+                        SizedBox(width: 5.w),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              user.username,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: MyFont.semiBold,
+                                fontSize: 18.sp,
                               ),
-                              Text(
-                                user.isAdmin ? "Admin" : "Tim Produksi",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontFamily: MyFont.regular,
-                                  fontSize: 16.sp,
+                            ),
+                            Text(
+                              user.isAdmin ? "Admin" : "Tim Produksi",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: MyFont.regular,
+                                fontSize: 16.sp,
+                              ),
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                    Material(
+                      type: MaterialType.transparency,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(5),
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (_) => const CustomLoading(),
+                          );
+                          clearStorage();
+                          FirebaseAuth.instance.signOut().then(
+                                (_) => context.goNamed(
+                                  LandingPage.routeName,
                                 ),
-                              )
-                            ],
+                              );
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.all(10.r),
+                          child: const Icon(
+                            Icons.logout_rounded,
+                            color: Colors.white,
                           ),
-                        ],
+                        ),
                       ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.logout_rounded),
-                        color: Colors.white,
-                      ),
-                    ],
-                  );
-                }),
+                    ),
+                  ],
+                );
+              },
+            ),
             SizedBox(height: 10.h)
           ],
         ),
