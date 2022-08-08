@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project/presentation/pages/auth/login.dart';
 import 'package:provider/provider.dart';
 
 import '../../presentation/pages/auth/register.dart';
@@ -30,6 +31,12 @@ class _MainPageState extends State<MainPage>
   }
 
   bool _isExpand = false;
+
+  List<Widget> page = [
+    const LoginPage(),
+    const RegisterPage(),
+  ];
+
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -60,13 +67,7 @@ class _MainPageState extends State<MainPage>
           ),
           Expanded(
             child: Consumer<PageProvider>(
-              builder: (_, notifier, __) => IndexedStack(
-                index: notifier.getIndex,
-                children: const [
-                  // LoginPage(),
-                  RegisterPage(),
-                ],
-              ),
+              builder: (_, notifier, __) => page[notifier.getIndex],
             ),
           )
         ],

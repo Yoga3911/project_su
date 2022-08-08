@@ -16,6 +16,7 @@ class EmailService extends SocialService {
   @override
   Future<void> signUp({required RegisterModel registerModel}) async {
     try {
+      await FirebaseAuth.instance.signInAnonymously();
       final doc = MyCollection.users.doc();
       await doc.set(
         RegisterModel(

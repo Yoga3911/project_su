@@ -1,13 +1,14 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:project/constants/fonts.dart';
 import 'package:project/data/models/auth/login_model.dart';
 import 'package:project/presentation/pages/auth/widgets/dialog_lupa_password.dart';
 import 'package:project/presentation/providers/auth_provider.dart';
 import 'package:project/presentation/providers/textfield_provider.dart';
 import 'package:project/presentation/providers/user_provider.dart';
-import 'package:project/routes/routes.dart';
+import 'package:project/presentation/widgets/main.dart';
 import 'package:project/utils/loading.dart';
 import 'package:provider/provider.dart';
 
@@ -46,11 +47,7 @@ class LoginForm extends StatelessWidget {
         }
 
         context.read<UserProvider>().setUser = value;
-        Navigator.pushNamedAndRemoveUntil(
-          context,
-          MyRoute.main,
-          (route) => false,
-        );
+        context.replaceNamed(MainPage.routeName);
       },
     );
   }
