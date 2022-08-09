@@ -2,6 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:project/presentation/pages/auth/landing.dart';
 import 'package:project/presentation/pages/auth/login.dart';
+import 'package:project/presentation/pages/bahan_baku/bahan_baku.dart';
+import 'package:project/presentation/pages/daftar_harga/daftar_harga.dart';
+import 'package:project/presentation/pages/pelanggan/pelanggan.dart';
+import 'package:project/presentation/pages/produk/produk.dart';
+import 'package:project/presentation/pages/salesman/salesman.dart';
+import 'package:project/presentation/pages/tim_produksi/tim_produksi.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -53,8 +59,12 @@ class _MainPageState extends State<MainPage>
   bool _isExpand = false;
 
   List<Widget> page = [
-    const LoginPage(),
-    const RegisterPage(),
+    const PelangganPage(),
+    const TimProduksiPage(),
+    const ProdukPage(),
+    const BahanBakuPage(),
+    const DaftarHargaPage(),
+    const SalesmanPage(),
   ];
 
   @override

@@ -83,20 +83,24 @@ class MySideNavbar extends StatelessWidget {
                                 ? const Color.fromARGB(202, 119, 200, 254)
                                 : MyColor.blue,
                             title: const Text(
-                              "Login",
+                              "Pelanggan",
                               style: TextStyle(
                                 fontFamily: MyFont.semiBold,
                                 color: Colors.white,
                               ),
                             ),
                             leading: const Icon(
-                              Icons.login_rounded,
+                              Icons.person_rounded,
                               color: Colors.white,
                             ),
                             onTap: () {
                               context.read<PageProvider>().setIndex = 0;
                               notifier.setSelect1 = true;
                               notifier.setSelect2 = false;
+                              notifier.setSelect3 = false;
+                              notifier.setSelect4 = false;
+                              notifier.setSelect5 = false;
+                              notifier.setSelect6 = false;
                             },
                           ),
                         ),
@@ -126,20 +130,212 @@ class MySideNavbar extends StatelessWidget {
                                 ? const Color.fromARGB(202, 119, 200, 254)
                                 : MyColor.blue,
                             title: const Text(
-                              "Register",
+                              "Tim Produksi",
                               style: TextStyle(
                                 fontFamily: MyFont.semiBold,
                                 color: Colors.white,
                               ),
                             ),
                             leading: const Icon(
-                              Icons.person_add_rounded,
+                              Icons.group_rounded,
                               color: Colors.white,
                             ),
                             onTap: () {
                               context.read<PageProvider>().setIndex = 1;
                               notifier.setSelect1 = false;
                               notifier.setSelect2 = true;
+                              notifier.setSelect3 = false;
+                              notifier.setSelect4 = false;
+                              notifier.setSelect5 = false;
+                              notifier.setSelect6 = false;
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 5),
+                    child: Consumer<PageProvider>(
+                      builder: (_, notifier, __) => Material(
+                        type: MaterialType.transparency,
+                        child: MouseRegion(
+                          onEnter: (e) {
+                            notifier.setHover3 = true;
+                          },
+                          onExit: (e) {
+                            notifier.setHover3 = false;
+                          },
+                          child: ListTile(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            hoverColor: notifier.getHover3
+                                ? const Color.fromARGB(255, 107, 196, 255)
+                                : MyColor.blue,
+                            tileColor: notifier.getSelect3
+                                ? const Color.fromARGB(202, 119, 200, 254)
+                                : MyColor.blue,
+                            title: const Text(
+                              "Produk",
+                              style: TextStyle(
+                                fontFamily: MyFont.semiBold,
+                                color: Colors.white,
+                              ),
+                            ),
+                            leading: const Icon(
+                              Icons.fastfood_rounded,
+                              color: Colors.white,
+                            ),
+                            onTap: () {
+                              context.read<PageProvider>().setIndex = 2;
+                              notifier.setSelect1 = false;
+                              notifier.setSelect2 = false;
+                              notifier.setSelect3 = true;
+                              notifier.setSelect4 = false;
+                              notifier.setSelect5 = false;
+                              notifier.setSelect6 = false;
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 5),
+                    child: Consumer<PageProvider>(
+                      builder: (_, notifier, __) => Material(
+                        type: MaterialType.transparency,
+                        child: MouseRegion(
+                          onEnter: (e) {
+                            notifier.setHover4 = true;
+                          },
+                          onExit: (e) {
+                            notifier.setHover4 = false;
+                          },
+                          child: ListTile(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            hoverColor: notifier.getHover4
+                                ? const Color.fromARGB(255, 107, 196, 255)
+                                : MyColor.blue,
+                            tileColor: notifier.getSelect4
+                                ? const Color.fromARGB(202, 119, 200, 254)
+                                : MyColor.blue,
+                            title: const Text(
+                              "Bahan Baku",
+                              style: TextStyle(
+                                fontFamily: MyFont.semiBold,
+                                color: Colors.white,
+                              ),
+                            ),
+                            leading: const Icon(
+                              Icons.warehouse_rounded,
+                              color: Colors.white,
+                            ),
+                            onTap: () {
+                              context.read<PageProvider>().setIndex = 3;
+                              notifier.setSelect1 = false;
+                              notifier.setSelect2 = false;
+                              notifier.setSelect3 = false;
+                              notifier.setSelect4 = true;
+                              notifier.setSelect5 = false;
+                              notifier.setSelect6 = false;
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 5),
+                    child: Consumer<PageProvider>(
+                      builder: (_, notifier, __) => Material(
+                        type: MaterialType.transparency,
+                        child: MouseRegion(
+                          onEnter: (e) {
+                            notifier.setHover5 = true;
+                          },
+                          onExit: (e) {
+                            notifier.setHover5 = false;
+                          },
+                          child: ListTile(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            hoverColor: notifier.getHover5
+                                ? const Color.fromARGB(255, 107, 196, 255)
+                                : MyColor.blue,
+                            tileColor: notifier.getSelect5
+                                ? const Color.fromARGB(202, 119, 200, 254)
+                                : MyColor.blue,
+                            title: const Text(
+                              "Daftar Harga",
+                              style: TextStyle(
+                                fontFamily: MyFont.semiBold,
+                                color: Colors.white,
+                              ),
+                            ),
+                            leading: const Icon(
+                              Icons.price_change_rounded,
+                              color: Colors.white,
+                            ),
+                            onTap: () {
+                              context.read<PageProvider>().setIndex = 4;
+                              notifier.setSelect1 = false;
+                              notifier.setSelect2 = false;
+                              notifier.setSelect3 = false;
+                              notifier.setSelect4 = false;
+                              notifier.setSelect5 = true;
+                              notifier.setSelect6 = false;
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 5),
+                    child: Consumer<PageProvider>(
+                      builder: (_, notifier, __) => Material(
+                        type: MaterialType.transparency,
+                        child: MouseRegion(
+                          onEnter: (e) {
+                            notifier.setHover6 = true;
+                          },
+                          onExit: (e) {
+                            notifier.setHover6 = false;
+                          },
+                          child: ListTile(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            hoverColor: notifier.getHover6
+                                ? const Color.fromARGB(255, 107, 196, 255)
+                                : MyColor.blue,
+                            tileColor: notifier.getSelect6
+                                ? const Color.fromARGB(202, 119, 200, 254)
+                                : MyColor.blue,
+                            title: const Text(
+                              "Salesman",
+                              style: TextStyle(
+                                fontFamily: MyFont.semiBold,
+                                color: Colors.white,
+                              ),
+                            ),
+                            leading: const Icon(
+                              Icons.man_rounded,
+                              color: Colors.white,
+                            ),
+                            onTap: () {
+                              context.read<PageProvider>().setIndex = 5;
+                              notifier.setSelect1 = false;
+                              notifier.setSelect2 = false;
+                              notifier.setSelect3 = false;
+                              notifier.setSelect4 = false;
+                              notifier.setSelect5 = false;
+                              notifier.setSelect6 = true;
                             },
                           ),
                         ),
