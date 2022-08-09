@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:project/presentation/pages/auth/landing.dart';
-import 'package:project/presentation/pages/auth/login.dart';
 import 'package:project/presentation/pages/bahan_baku/bahan_baku.dart';
 import 'package:project/presentation/pages/daftar_harga/daftar_harga.dart';
 import 'package:project/presentation/pages/pelanggan/pelanggan.dart';
@@ -11,7 +10,6 @@ import 'package:project/presentation/pages/tim_produksi/tim_produksi.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../presentation/pages/auth/register.dart';
 import '../../presentation/providers/page_provider.dart';
 import '../../presentation/widgets/sidebar.dart';
 
