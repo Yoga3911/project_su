@@ -9,58 +9,36 @@ import '../constants/collection.dart';
 
 class UserService {
   Future<bool> getByUsername({required String username}) async {
-    try {
-      await FirebaseAuth.instance.signInAnonymously();
-      final data =
-          await MyCollection.users.where("username", isEqualTo: username).get();
+    await FirebaseAuth.instance.signInAnonymously();
+    final data =
+        await MyCollection.users.where("username", isEqualTo: username).get();
 
-      if (data.docs.isNotEmpty) {
-        return true;
-      }
-      return false;
-    } catch (e) {
-      log(e.toString());
-      rethrow;
+    if (data.docs.isNotEmpty) {
+      return true;
     }
+    return false;
   }
 
   Future<UserModel> getById({required String userId}) async {
-    try {
-      final data =
-          await MyCollection.users.where("userId", isEqualTo: userId).get();
+    final data =
+        await MyCollection.users.where("userId", isEqualTo: userId).get();
 
-      return UserModel.fromJson(
-          (data.docs.first.data() as Map<String, dynamic>));
-    } catch (e) {
-      log(e.toString());
-      rethrow;
-    }
+    return UserModel.fromJson((data.docs.first.data() as Map<String, dynamic>));
   }
 
   Future<dynamic> getByNIK({required String nik}) async {
-    try {
-      final data = await MyCollection.users.where("nik", isEqualTo: nik).get();
+    final data = await MyCollection.users.where("nik", isEqualTo: nik).get();
 
-      return UserModel.fromJson(
-        (data.docs.first.data() as Map<String, dynamic>),
-      );
-    } catch (e) {
-      log(e.toString());
-      return e.toString();
-    }
+    return UserModel.fromJson(
+      (data.docs.first.data() as Map<String, dynamic>),
+    );
   }
 
   Future<dynamic> getDataByUsername({required String username}) async {
-    try {
-      final data =
-          await MyCollection.users.where("username", isEqualTo: username).get();
+    final data =
+        await MyCollection.users.where("username", isEqualTo: username).get();
 
-      return UserModel.fromJson(
-          (data.docs.first.data() as Map<String, dynamic>));
-    } catch (e) {
-      log(e.toString());
-      return false;
-    }
+    return UserModel.fromJson((data.docs.first.data() as Map<String, dynamic>));
   }
 
   Future<bool> checkData({
@@ -71,17 +49,12 @@ class UserService {
       username: username,
     );
 
-    try {
-      MyCollection.users.doc(data.userId).update(
-            UserForgotPassword(
-              password: hashPass(password),
-              updatedAt: DateTime.now().millisecondsSinceEpoch,
-            ).toJson(),
-          );
-      return true;
-    } catch (e) {
-      log(e.toString());
-      return false;
-    }
+    MyCollection.users.doc(data.userId).update(
+          UserForgotPassword(
+            password: hashPass(password),
+            updatedAt: DateTime.now().millisecondsSinceEpoch,
+          ).toJson(),
+        );
+    return true;
   }
 }
