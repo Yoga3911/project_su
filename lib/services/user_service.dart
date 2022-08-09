@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:project/data/models/user/user_forgot_password.dart';
 import 'package:project/data/models/user/user_model.dart';
-import 'package:project/utils/hash.dart';
 
 import '../constants/collection.dart';
 
@@ -49,7 +48,7 @@ class UserService {
 
     MyCollection.users.doc(data.userId).update(
           UserForgotPassword(
-            password: hashPass(password),
+            password: (password),
             updatedAt: DateTime.now().millisecondsSinceEpoch,
           ).toJson(),
         );

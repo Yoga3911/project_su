@@ -7,7 +7,6 @@ import 'package:project/data/models/other/txtfield_model.dart';
 import 'package:project/presentation/pages/auth/login.dart';
 import 'package:project/presentation/providers/auth_provider.dart';
 import 'package:project/presentation/providers/textfield_provider.dart';
-import 'package:project/utils/hash.dart';
 import 'package:project/utils/loading.dart';
 import 'package:provider/provider.dart';
 
@@ -24,6 +23,7 @@ class RegisterForm extends StatelessWidget {
 
   Future<bool> validasi(BuildContext context) async {
     if (txtField.getUsername.text.isEmpty ||
+        txtField.getFullName.text.isEmpty ||
         txtField.getPassword1.text.isEmpty ||
         txtField.getPassword2.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -84,7 +84,8 @@ class RegisterForm extends StatelessWidget {
         .register(
           RegisterModel(
             username: txtField.getUsername.text,
-            password: hashPass(txtField.getPassword1.text),
+            password: (txtField.getPassword1.text),
+            fullName: txtField.getFullName.text,
             createdAt: date,
             updatedAt: date,
           ),
@@ -124,6 +125,13 @@ class RegisterForm extends StatelessWidget {
         isSecure: false,
         controller: txtField.getUsername,
         hint: "Minimal 6 karakter, kombinasi huruf dan angka",
+      ),
+      TextFieldModel(
+        label: "Nama Lengkap",
+        icon: Icons.contact_mail_rounded,
+        isSecure: false,
+        controller: txtField.getFullName,
+        hint: "Isi nama sesuai KTP",
       ),
       TextFieldModel(
         label: "Kata Sandi",

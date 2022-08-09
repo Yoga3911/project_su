@@ -40,11 +40,13 @@ class TextFieldLoginProvider with ChangeNotifier {
 //! REGISTER
 class TextFieldRegisterProvider with ChangeNotifier {
   late TextEditingController _username;
+  late TextEditingController _fullName;
   late TextEditingController _password1;
   late TextEditingController _password2;
 
   TextFieldRegisterProvider() {
     _username = TextEditingController();
+    _fullName = TextEditingController();
     _password1 = TextEditingController();
     _password2 = TextEditingController();
   }
@@ -52,12 +54,14 @@ class TextFieldRegisterProvider with ChangeNotifier {
   @override
   void dispose() {
     _username.dispose();
+    _fullName.dispose();
     _password1.dispose();
     _password2.dispose();
     super.dispose();
   }
 
   TextEditingController get getUsername => _username;
+  TextEditingController get getFullName => _fullName;
   TextEditingController get getPassword1 => _password1;
   TextEditingController get getPassword2 => _password2;
 }

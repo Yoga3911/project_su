@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:project/constants/color.dart';
 import 'package:provider/provider.dart';
 
@@ -14,6 +15,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  initializeDateFormatting("in_ID", "");
   await dotenv.load(fileName: ".env");
   runApp(const MyApp());
 }
@@ -34,7 +36,7 @@ class MyApp extends StatelessWidget {
             designSize: const Size(393, 786),
             builder: (_, __) => MaterialApp.router(
               debugShowCheckedModeBanner: false,
-              title: "Sari Nikmat",
+              title: "Sari Nikmat - Web",
               theme: MyColor.theme,
               routeInformationParser: router.routeInformationParser,
               routerDelegate: router.routerDelegate,

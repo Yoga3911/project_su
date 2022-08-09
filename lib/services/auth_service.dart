@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -6,7 +5,6 @@ import 'package:project/constants/collection.dart';
 import 'package:project/data/models/auth/login_model.dart';
 import 'package:project/data/models/auth/register_model.dart';
 import 'package:project/data/models/user/user_model.dart';
-import 'package:project/utils/hash.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'abs_auth_service.dart';
@@ -21,6 +19,8 @@ class EmailService extends SocialService {
         userId: doc.id,
         username: registerModel.username,
         password: registerModel.password,
+        fullName: registerModel.fullName,
+        isAdmin: false,
         createdAt: registerModel.createdAt,
         updatedAt: registerModel.updatedAt,
       ).toJson(),
@@ -36,7 +36,7 @@ class EmailService extends SocialService {
     if (data.docs.isEmpty) {
       return "Nama Pengguna atau Kata Sandi salah";
     } else if (data.docs.isNotEmpty &&
-        data.docs.first.data()["password"] != hashPass(loginModel.password)) {
+        data.docs.first.data()["password"] != (loginModel.password)) {
       return "Nama Pengguna atau Kata Sandi salah";
     }
 

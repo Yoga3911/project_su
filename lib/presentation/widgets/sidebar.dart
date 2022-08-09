@@ -355,38 +355,43 @@ class MySideNavbar extends StatelessWidget {
                 return Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
-                      children: [
-                        CircleAvatar(
-                          radius: 30.r,
-                          backgroundColor: Colors.white,
-                          backgroundImage: user.isAdmin
-                              ? const AssetImage("assets/images/admin.png")
-                              : const AssetImage("assets/images/profile.png"),
-                        ),
-                        SizedBox(width: 5.w),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              user.username,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontFamily: MyFont.semiBold,
-                                fontSize: 18.sp,
-                              ),
+                    Expanded(
+                      child: Row(
+                        children: [
+                          CircleAvatar(
+                            radius: 30.r,
+                            backgroundColor: Colors.white,
+                            backgroundImage: user.isAdmin
+                                ? const AssetImage("assets/images/admin.png")
+                                : const AssetImage("assets/images/profile.png"),
+                          ),
+                          SizedBox(width: 5.w),
+                          Flexible(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  user.fullName,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: MyFont.semiBold,
+                                    fontSize: 18.sp,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                                Text(
+                                  user.isAdmin ? "Admin" : "Tim Produksi",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: MyFont.regular,
+                                    fontSize: 16.sp,
+                                  ),
+                                )
+                              ],
                             ),
-                            Text(
-                              user.isAdmin ? "Admin" : "Tim Produksi",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontFamily: MyFont.regular,
-                                fontSize: 16.sp,
-                              ),
-                            )
-                          ],
-                        ),
-                      ],
+                          ),
+                        ],
+                      ),
                     ),
                     Material(
                       type: MaterialType.transparency,

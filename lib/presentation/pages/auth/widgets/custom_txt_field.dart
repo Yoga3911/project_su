@@ -56,9 +56,9 @@ class _CustomTextFieldState extends State<CustomTextField> {
         obscureText: widget.isSecure ? _isSecure : false,
         focusNode: _focusNode,
         keyboardType: widget.type ?? TextInputType.multiline,
-        inputFormatters: [
-          FilteringTextInputFormatter.allow(RegExp('[A-Za-z0-9]'))
-        ],
+        inputFormatters: (widget.label == "Nama Lengkap")
+            ? [FilteringTextInputFormatter.allow(RegExp('[A-Za-z0-9,.\' ]'))]
+            : [FilteringTextInputFormatter.allow(RegExp('[A-Za-z0-9]'))],
         decoration: InputDecoration(
           helperText: widget.helper,
           labelText: widget.label,
