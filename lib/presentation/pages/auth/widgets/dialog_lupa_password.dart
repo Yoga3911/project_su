@@ -121,7 +121,7 @@ class ForgotPasswordDialog extends StatelessWidget {
                             vertical: 20.h,
                             horizontal: 10.w,
                           ),
-                          primary: Colors.grey,
+                          backgroundColor: Colors.grey,
                         ),
                         child: const Text("Kembali"),
                       ),

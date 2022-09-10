@@ -12,7 +12,7 @@ class MyColor {
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        primary: blue,
+        backgroundColor: blue,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),

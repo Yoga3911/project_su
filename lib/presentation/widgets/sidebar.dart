@@ -405,12 +405,69 @@ class MySideNavbar extends StatelessWidget {
                             context: context,
                             builder: (_) => const CustomLoading(),
                           );
-                          clearStorage();
-                          FirebaseAuth.instance.signOut().then(
-                                (_) => context.goNamed(
-                                  LandingPage.routeName,
+
+                          Navigator.pop(context);
+                          showDialog(
+                            context: context,
+                            builder: (_) => AlertDialog(
+                              title: Text(
+                                "Perhatian!",
+                                style: TextStyle(
+                                  fontSize: 20.sp,
+                                  fontFamily: MyFont.semiBold,
                                 ),
-                              );
+                              ),
+                              content: Text(
+                                "Apakah anda yakin ingin keluar?",
+                                style: TextStyle(
+                                  fontSize: 16.sp,
+                                  fontFamily: MyFont.regular,
+                                ),
+                              ),
+                              actions: [
+                                ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    backgroundColor: Colors.grey,
+                                  ),
+                                  child: const Text("Batal"),
+                                ),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    context.read<PageProvider>().setIndex = 0;
+                                    context.read<PageProvider>().setSelect1 =
+                                        true;
+                                    context.read<PageProvider>().setSelect2 =
+                                        false;
+                                    context.read<PageProvider>().setSelect3 =
+                                        false;
+                                    context.read<PageProvider>().setSelect4 =
+                                        false;
+                                    context.read<PageProvider>().setSelect5 =
+                                        false;
+                                    context.read<PageProvider>().setSelect6 =
+                                        false;
+                                    clearStorage();
+                                    FirebaseAuth.instance.signOut().then(
+                                          (_) => context
+                                              .goNamed(LandingPage.routeName),
+                                        );
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                  ),
+                                  child: const Text("Ya"),
+                                ),
+                              ],
+                            ),
+                          );
                         },
                         child: Padding(
                           padding: EdgeInsets.all(10.r),
