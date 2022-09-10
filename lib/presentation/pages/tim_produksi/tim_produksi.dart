@@ -6,8 +6,30 @@ import 'package:intl/intl.dart';
 import '../../../constants/collection.dart';
 import '../../../constants/color.dart';
 
-class TimProduksiPage extends StatelessWidget {
+class TimProduksiPage extends StatefulWidget {
   const TimProduksiPage({super.key});
+
+  @override
+  State<TimProduksiPage> createState() => _TimProduksiPageState();
+}
+
+class _TimProduksiPageState extends State<TimProduksiPage> {
+  late ScrollController _verticalScroll;
+  late ScrollController _horizontalScroll;
+
+  @override
+  void initState() {
+    _verticalScroll = ScrollController();
+    _horizontalScroll = ScrollController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _verticalScroll.dispose();
+    _horizontalScroll.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,93 +69,103 @@ class TimProduksiPage extends StatelessWidget {
                 ),
                 SizedBox(height: 20.h),
                 Expanded(
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    children: [
-                      DataTable(
-                        headingRowColor:
-                            MaterialStateProperty.all(MyColor.blue),
-                        columns: const [
-                          DataColumn(
-                            label: Text(
-                              'ID',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                          DataColumn(
-                            label: Text(
-                              'Nama',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                          DataColumn(
-                            label: Text(
-                              'Tanggal Diterima',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                          DataColumn(
-                            label: Text(
-                              'Masa Kerja',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                          DataColumn(
-                            label: Text(
-                              'Aksi',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ],
-                        rows: [
-                          for (var item in data)
-                            DataRow(
-                              cells: [
-                                DataCell(Text(item.id)),
-                                DataCell(Text(item.data()["fullName"])),
-                                DataCell(
-                                  Text(
-                                    DateFormat('dd-MMMM-yyyy', 'in_ID').format(
-                                      DateTime.fromMillisecondsSinceEpoch(
-                                        item.data()["createdAt"],
-                                      ),
-                                    ),
+                  child: Scrollbar(
+                    controller: _verticalScroll,
+                    child: Scrollbar(
+                      controller: _horizontalScroll,
+                      child: SingleChildScrollView(
+                        controller: _verticalScroll,
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          controller: _horizontalScroll,
+                          child: DataTable(
+                            headingRowColor:
+                                MaterialStateProperty.all(MyColor.blue),
+                            columns: const [
+                              DataColumn(
+                                label: Text(
+                                  'ID',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
                                   ),
                                 ),
-                                DataCell(Text(
-                                    "${getMonth(DateTime.fromMillisecondsSinceEpoch(item.data()["createdAt"]), DateTime.now())}")),
-                                DataCell(
-                                  IconButton(
-                                      onPressed: () {},
-                                      splashRadius: 20,
-                                      icon: const Icon(Icons.delete_rounded),
-                                      color: Colors.red),
+                              ),
+                              DataColumn(
+                                label: Text(
+                                  'Nama',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
                                 ),
-                              ],
-                            ),
-                        ],
+                              ),
+                              DataColumn(
+                                label: Text(
+                                  'Tanggal Diterima',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                              DataColumn(
+                                label: Text(
+                                  'Masa Kerja',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                              DataColumn(
+                                label: Text(
+                                  'Aksi',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ],
+                            rows: [
+                              for (var item in data)
+                                DataRow(
+                                  cells: [
+                                    DataCell(Text(item.id)),
+                                    DataCell(Text(item.data()["fullName"])),
+                                    DataCell(
+                                      Text(
+                                        DateFormat('dd-MMMM-yyyy', 'in_ID')
+                                            .format(
+                                          DateTime.fromMillisecondsSinceEpoch(
+                                            item.data()["createdAt"],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    DataCell(Text(
+                                        "${getMonth(DateTime.fromMillisecondsSinceEpoch(item.data()["createdAt"]), DateTime.now())}")),
+                                    DataCell(
+                                      IconButton(
+                                          onPressed: () {},
+                                          splashRadius: 20,
+                                          icon:
+                                              const Icon(Icons.delete_rounded),
+                                          color: Colors.red),
+                                    ),
+                                  ],
+                                ),
+                            ],
+                          ),
+                        ),
                       ),
-                    ],
+                    ),
                   ),
                 ),
               ],
