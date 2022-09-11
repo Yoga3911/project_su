@@ -14,6 +14,33 @@ class ProductProvider with ChangeNotifier {
   factory ProductProvider() => _single;
 
   Future<bool> insert({required ProductModel productModel}) async {
-    return await _productService.insert(productModel: productModel);
+    final prod = productModel.copyWith(id: "PRD-${_products.length + 1}");
+    addProduct = prod;
+    notifyListeners();
+    return await _productService.insert(productModel: prod);
+  }
+
+  List<ProductModel> _products = [];
+  Future<void> getAll() async {
+    final response = await _productService.getAll();
+    if (response == false) {
+      return;
+    }
+
+    setProducts = <ProductModel>[
+      for (var i in response.docs)
+        ProductModel.fromJson(i.data() as Map<String, dynamic>)
+    ];
+  }
+
+  set setProducts(List<ProductModel> val) {
+    _products = val;
+    // notifyListeners();
+  }
+
+  List<ProductModel> get getProducts => _products;
+
+  set addProduct(ProductModel val) {
+    _products.add(val);
   }
 }

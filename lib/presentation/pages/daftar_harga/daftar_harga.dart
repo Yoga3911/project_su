@@ -1,12 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl/intl.dart';
 import 'package:project/presentation/pages/daftar_harga/widgets/add_product.dart';
+import 'package:project/presentation/providers/product_provider.dart';
+import 'package:provider/provider.dart';
 
-import '../../../constants/collection.dart';
 import '../../../constants/color.dart';
-import '../tim_produksi/tim_produksi.dart';
 
 class DaftarHargaPage extends StatefulWidget {
   const DaftarHargaPage({super.key});
@@ -35,6 +33,7 @@ class _DaftarHargaPageState extends State<DaftarHargaPage> {
 
   @override
   Widget build(BuildContext context) {
+    final productProv = context.read<ProductProvider>();
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => showDialog(
@@ -60,9 +59,8 @@ class _DaftarHargaPageState extends State<DaftarHargaPage> {
               style: TextStyle(fontSize: 24.sp),
             ),
             SizedBox(height: 20.h),
-            FutureBuilder<QuerySnapshot>(
-              future:
-                  MyCollection.users.where("isAdmin", isEqualTo: false).get(),
+            FutureBuilder<void>(
+              future: productProv.getAll(),
               builder: (_, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(
@@ -71,18 +69,19 @@ class _DaftarHargaPageState extends State<DaftarHargaPage> {
                     ),
                   );
                 }
-                if (snapshot.data!.docs.isEmpty) {
-                  return Center(
-                    child: Text(
-                      "Tidak ada data",
-                      style: TextStyle(
-                        fontSize: 20.sp,
+                if (productProv.getProducts.isEmpty) {
+                  return Expanded(
+                    child: Center(
+                      child: Text(
+                        "Tidak ada data",
+                        style: TextStyle(
+                          fontSize: 20.sp,
+                        ),
                       ),
                     ),
                   );
                 }
-                final data = snapshot.data!.docs
-                    as List<QueryDocumentSnapshot<Map<String, dynamic>>>;
+
                 return Expanded(
                   child: Scrollbar(
                     controller: _verticalScroll,
@@ -93,90 +92,138 @@ class _DaftarHargaPageState extends State<DaftarHargaPage> {
                         child: SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
                           controller: _horizontalScroll,
-                          child: DataTable(
-                            headingRowColor:
-                                MaterialStateProperty.all(MyColor.blue),
-                            columns: const [
-                              DataColumn(
-                                label: Text(
-                                  'ID',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
+                          child: Consumer<ProductProvider>(
+                            builder: (_, notifier, __) => DataTable(
+                              headingRowColor:
+                                  MaterialStateProperty.all(MyColor.blue),
+                              columns: const [
+                                DataColumn(
+                                  label: Text(
+                                    'ID',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              DataColumn(
-                                label: Text(
-                                  'Nama',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
+                                DataColumn(
+                                  label: Text(
+                                    'Nama Produk',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              DataColumn(
-                                label: Text(
-                                  'Tanggal Diterima',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
+                                DataColumn(
+                                  label: Text(
+                                    'Netto',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              DataColumn(
-                                label: Text(
-                                  'Masa Kerja',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
+                                DataColumn(
+                                  label: Text(
+                                    'Harga Agen',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              DataColumn(
-                                label: Text(
-                                  'Aksi',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
+                                DataColumn(
+                                  label: Text(
+                                    'Harga Distributor',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
-                            rows: [
-                              for (var item in data)
-                                DataRow(
-                                  cells: [
-                                    DataCell(Text(item.id)),
-                                    DataCell(Text(item.data()["fullName"])),
-                                    DataCell(
-                                      Text(
-                                        DateFormat('dd-MMMM-yyyy', 'in_ID')
-                                            .format(
-                                          DateTime.fromMillisecondsSinceEpoch(
-                                            item.data()["createdAt"],
-                                          ),
+                                DataColumn(
+                                  label: Text(
+                                    'Harga Swalayan',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                                DataColumn(
+                                  label: Text(
+                                    'Harga Reseller',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                                DataColumn(
+                                  label: Text(
+                                    'Harga Konsumen',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                              rows: [
+                                for (var item in notifier.getProducts)
+                                  DataRow(
+                                    cells: [
+                                      DataCell(
+                                        Text(item.id!),
+                                      ),
+                                      DataCell(
+                                        Text(
+                                          item.productName!,
                                         ),
                                       ),
-                                    ),
-                                    DataCell(Text(
-                                        "${getMonth(DateTime.fromMillisecondsSinceEpoch(item.data()["createdAt"]), DateTime.now())}")),
-                                    DataCell(
-                                      IconButton(
-                                        onPressed: () {},
-                                        splashRadius: 20,
-                                        icon: const Icon(Icons.delete_rounded),
-                                        color: Colors.red,
+                                      DataCell(
+                                        Text(
+                                          item.netto!.toString(),
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                            ],
+                                      DataCell(
+                                        Text(
+                                          item.hargaAgen!.toString(),
+                                        ),
+                                      ),
+                                      DataCell(
+                                        Text(
+                                          item.hargaDistributor!.toString(),
+                                        ),
+                                      ),
+                                      DataCell(
+                                        Text(
+                                          item.hargaSwalayan!.toString(),
+                                        ),
+                                      ),
+                                      DataCell(
+                                        Text(
+                                          item.hargaReseller!.toString(),
+                                        ),
+                                      ),
+                                      DataCell(
+                                        Text(
+                                          item.hargaKonsumen!.toString(),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                              ],
+                            ),
                           ),
                         ),
                       ),

@@ -18,16 +18,19 @@ class ProductService implements ProductServiceAbs {
   }
 
   @override
-  Future getAll() {
-    // TODO: implement getAll
-    throw UnimplementedError();
+  Future<dynamic> getAll() async {
+    try {
+      return await MyCollection.product.get();
+    } catch (e) {
+      log(e.toString());
+      return false;
+    }
   }
 
   @override
   Future<bool> insert({required ProductModel productModel}) async {
     try {
-      final doc = MyCollection.product.doc();
-      doc.set(productModel.toJson()..update("id", (value) => doc.id));
+      MyCollection.product.doc(productModel.id).set(productModel.toJson());
       return true;
     } catch (e) {
       log(e.toString());
