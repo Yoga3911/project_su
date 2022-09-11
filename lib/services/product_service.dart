@@ -6,25 +6,25 @@ import 'package:project/services/abs_product_service.dart';
 
 class ProductService implements ProductServiceAbs {
   @override
-  Future deleteProduct() {
-    // TODO: implement deleteProduct
+  Future delete() {
+    // TODO: implement delete
     throw UnimplementedError();
   }
 
   @override
-  Future editProduct() {
-    // TODO: implement editProduct
+  Future edit() {
+    // TODO: implement edit
     throw UnimplementedError();
   }
 
   @override
-  Future getAllProduct() {
-    // TODO: implement getAllProduct
+  Future getAll() {
+    // TODO: implement getAll
     throw UnimplementedError();
   }
 
   @override
-  Future<bool> insertProduct({required ProductModel productModel}) async {
+  Future<bool> insert({required ProductModel productModel}) async {
     try {
       final doc = MyCollection.product.doc();
       doc.set(productModel.toJson()..update("id", (value) => doc.id));

@@ -13,7 +13,7 @@ class ProductProvider with ChangeNotifier {
 
   factory ProductProvider() => _single;
 
-  Future<bool> insertProduct({required ProductModel productModel}) async {
-    return await _productService.insertProduct(productModel: productModel);
+  Future<bool> insert({required ProductModel productModel}) async {
+    return await _productService.insert(productModel: productModel);
   }
 }

@@ -276,7 +276,7 @@ class _AddProductDialogState extends State<AddProductDialog> {
             );
             context
                 .read<ProductProvider>()
-                .insertProduct(
+                .insert(
                   productModel: ProductModel(
                     productName: _namaProduk.text,
                     hargaAgen: int.parse(_hargaAgen.text),
