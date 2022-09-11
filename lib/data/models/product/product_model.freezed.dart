@@ -22,6 +22,9 @@ ProductModel _$ProductModelFromJson(Map<String, dynamic> json) {
 mixin _$ProductModel {
   String? get id => throw _privateConstructorUsedError;
   String? get productName => throw _privateConstructorUsedError;
+  bool? get isDeleted => throw _privateConstructorUsedError;
+  int? get createdAt => throw _privateConstructorUsedError;
+  int? get updatedAt => throw _privateConstructorUsedError;
   int? get netto => throw _privateConstructorUsedError;
   int? get hargaAgen => throw _privateConstructorUsedError;
   int? get hargaDistributor => throw _privateConstructorUsedError;
@@ -43,6 +46,9 @@ abstract class $ProductModelCopyWith<$Res> {
   $Res call(
       {String? id,
       String? productName,
+      bool? isDeleted,
+      int? createdAt,
+      int? updatedAt,
       int? netto,
       int? hargaAgen,
       int? hargaDistributor,
@@ -63,6 +69,9 @@ class _$ProductModelCopyWithImpl<$Res> implements $ProductModelCopyWith<$Res> {
   $Res call({
     Object? id = freezed,
     Object? productName = freezed,
+    Object? isDeleted = freezed,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
     Object? netto = freezed,
     Object? hargaAgen = freezed,
     Object? hargaDistributor = freezed,
@@ -79,6 +88,18 @@ class _$ProductModelCopyWithImpl<$Res> implements $ProductModelCopyWith<$Res> {
           ? _value.productName
           : productName // ignore: cast_nullable_to_non_nullable
               as String?,
+      isDeleted: isDeleted == freezed
+          ? _value.isDeleted
+          : isDeleted // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      createdAt: createdAt == freezed
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as int?,
+      updatedAt: updatedAt == freezed
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as int?,
       netto: netto == freezed
           ? _value.netto
           : netto // ignore: cast_nullable_to_non_nullable
@@ -117,6 +138,9 @@ abstract class _$$_ProductModelCopyWith<$Res>
   $Res call(
       {String? id,
       String? productName,
+      bool? isDeleted,
+      int? createdAt,
+      int? updatedAt,
       int? netto,
       int? hargaAgen,
       int? hargaDistributor,
@@ -140,6 +164,9 @@ class __$$_ProductModelCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? productName = freezed,
+    Object? isDeleted = freezed,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
     Object? netto = freezed,
     Object? hargaAgen = freezed,
     Object? hargaDistributor = freezed,
@@ -156,6 +183,18 @@ class __$$_ProductModelCopyWithImpl<$Res>
           ? _value.productName
           : productName // ignore: cast_nullable_to_non_nullable
               as String?,
+      isDeleted: isDeleted == freezed
+          ? _value.isDeleted
+          : isDeleted // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      createdAt: createdAt == freezed
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as int?,
+      updatedAt: updatedAt == freezed
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as int?,
       netto: netto == freezed
           ? _value.netto
           : netto // ignore: cast_nullable_to_non_nullable
@@ -190,6 +229,9 @@ class _$_ProductModel implements _ProductModel {
   const _$_ProductModel(
       {this.id = "-",
       this.productName = "-",
+      this.isDeleted = false,
+      this.createdAt = 0,
+      this.updatedAt = 0,
       this.netto = 0,
       this.hargaAgen = 0,
       this.hargaDistributor = 0,
@@ -206,6 +248,15 @@ class _$_ProductModel implements _ProductModel {
   @override
   @JsonKey()
   final String? productName;
+  @override
+  @JsonKey()
+  final bool? isDeleted;
+  @override
+  @JsonKey()
+  final int? createdAt;
+  @override
+  @JsonKey()
+  final int? updatedAt;
   @override
   @JsonKey()
   final int? netto;
@@ -227,7 +278,7 @@ class _$_ProductModel implements _ProductModel {
 
   @override
   String toString() {
-    return 'ProductModel(id: $id, productName: $productName, netto: $netto, hargaAgen: $hargaAgen, hargaDistributor: $hargaDistributor, hargaSwalayan: $hargaSwalayan, hargaReseller: $hargaReseller, hargaKonsumen: $hargaKonsumen)';
+    return 'ProductModel(id: $id, productName: $productName, isDeleted: $isDeleted, createdAt: $createdAt, updatedAt: $updatedAt, netto: $netto, hargaAgen: $hargaAgen, hargaDistributor: $hargaDistributor, hargaSwalayan: $hargaSwalayan, hargaReseller: $hargaReseller, hargaKonsumen: $hargaKonsumen)';
   }
 
   @override
@@ -238,6 +289,9 @@ class _$_ProductModel implements _ProductModel {
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality()
                 .equals(other.productName, productName) &&
+            const DeepCollectionEquality().equals(other.isDeleted, isDeleted) &&
+            const DeepCollectionEquality().equals(other.createdAt, createdAt) &&
+            const DeepCollectionEquality().equals(other.updatedAt, updatedAt) &&
             const DeepCollectionEquality().equals(other.netto, netto) &&
             const DeepCollectionEquality().equals(other.hargaAgen, hargaAgen) &&
             const DeepCollectionEquality()
@@ -256,6 +310,9 @@ class _$_ProductModel implements _ProductModel {
       runtimeType,
       const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(productName),
+      const DeepCollectionEquality().hash(isDeleted),
+      const DeepCollectionEquality().hash(createdAt),
+      const DeepCollectionEquality().hash(updatedAt),
       const DeepCollectionEquality().hash(netto),
       const DeepCollectionEquality().hash(hargaAgen),
       const DeepCollectionEquality().hash(hargaDistributor),
@@ -280,6 +337,9 @@ abstract class _ProductModel implements ProductModel {
   const factory _ProductModel(
       {final String? id,
       final String? productName,
+      final bool? isDeleted,
+      final int? createdAt,
+      final int? updatedAt,
       final int? netto,
       final int? hargaAgen,
       final int? hargaDistributor,
@@ -294,6 +354,12 @@ abstract class _ProductModel implements ProductModel {
   String? get id;
   @override
   String? get productName;
+  @override
+  bool? get isDeleted;
+  @override
+  int? get createdAt;
+  @override
+  int? get updatedAt;
   @override
   int? get netto;
   @override

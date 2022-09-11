@@ -8,6 +8,9 @@ class ProductModel with _$ProductModel {
   const factory ProductModel({
     @Default("-") String? id,
     @Default("-") String? productName,
+    @Default(false) bool? isDeleted,
+    @Default(0) int? createdAt,
+    @Default(0) int? updatedAt,
     @Default(0) int? netto,
     @Default(0) int? hargaAgen,
     @Default(0) int? hargaDistributor,

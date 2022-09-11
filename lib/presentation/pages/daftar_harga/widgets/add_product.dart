@@ -274,6 +274,7 @@ class _AddProductDialogState extends State<AddProductDialog> {
               context: context,
               builder: (_) => const CustomLoading(),
             );
+            final dateOnMili = DateTime.now().millisecondsSinceEpoch;
             context
                 .read<ProductProvider>()
                 .insert(
@@ -285,6 +286,8 @@ class _AddProductDialogState extends State<AddProductDialog> {
                     hargaReseller: int.parse(_hargaKonsumen.text),
                     hargaKonsumen: int.parse(_hargaKonsumen.text),
                     netto: int.parse(_netto.text),
+                    createdAt: dateOnMili,
+                    updatedAt: dateOnMili,
                   ),
                 )
                 .then(

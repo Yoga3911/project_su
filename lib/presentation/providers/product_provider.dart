@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:project/data/models/product/product_model.dart';
 
@@ -14,9 +16,9 @@ class ProductProvider with ChangeNotifier {
   factory ProductProvider() => _single;
 
   Future<bool> insert({required ProductModel productModel}) async {
+    log((_products.length + 1).toString());
     final prod = productModel.copyWith(id: "PRD-${_products.length + 1}");
     addProduct = prod;
-    notifyListeners();
     return await _productService.insert(productModel: prod);
   }
 
@@ -42,5 +44,16 @@ class ProductProvider with ChangeNotifier {
 
   set addProduct(ProductModel val) {
     _products.add(val);
+    notifyListeners();
+  }
+
+  set deleteProduct(ProductModel val) {
+    _products[_products.indexOf(val)] = val.copyWith(isDeleted: true);
+    notifyListeners();
+  }
+
+  Future<bool> delete({required ProductModel productModel}) async {
+    deleteProduct = productModel;
+    return await _productService.delete(productModel: productModel);
   }
 }

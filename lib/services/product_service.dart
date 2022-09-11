@@ -6,9 +6,16 @@ import 'package:project/services/abs_product_service.dart';
 
 class ProductService implements ProductServiceAbs {
   @override
-  Future delete() {
-    // TODO: implement delete
-    throw UnimplementedError();
+  Future<bool> delete({required ProductModel productModel}) async {
+    try {
+      MyCollection.product
+          .doc(productModel.id)
+          .update(productModel.copyWith(isDeleted: true).toJson());
+      return true;
+    } catch (e) {
+      log(e.toString());
+      return false;
+    }
   }
 
   @override

@@ -37,6 +37,7 @@ class _DaftarHargaPageState extends State<DaftarHargaPage> {
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => showDialog(
+          barrierDismissible: false,
           context: context,
           builder: (_) => const AddProductDialog(),
         ),
@@ -69,166 +70,224 @@ class _DaftarHargaPageState extends State<DaftarHargaPage> {
                     ),
                   );
                 }
-                if (productProv.getProducts.isEmpty) {
-                  return Expanded(
-                    child: Center(
-                      child: Text(
-                        "Tidak ada data",
-                        style: TextStyle(
-                          fontSize: 20.sp,
-                        ),
-                      ),
-                    ),
-                  );
-                }
 
-                return Expanded(
-                  child: Scrollbar(
-                    controller: _verticalScroll,
-                    child: Scrollbar(
-                      controller: _horizontalScroll,
-                      child: SingleChildScrollView(
-                        controller: _verticalScroll,
-                        child: SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          controller: _horizontalScroll,
-                          child: Consumer<ProductProvider>(
-                            builder: (_, notifier, __) => DataTable(
-                              headingRowColor:
-                                  MaterialStateProperty.all(MyColor.blue),
-                              columns: const [
-                                DataColumn(
-                                  label: Text(
-                                    'ID',
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                                DataColumn(
-                                  label: Text(
-                                    'Nama Produk',
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                                DataColumn(
-                                  label: Text(
-                                    'Netto',
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                                DataColumn(
-                                  label: Text(
-                                    'Harga Agen',
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                                DataColumn(
-                                  label: Text(
-                                    'Harga Distributor',
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                                DataColumn(
-                                  label: Text(
-                                    'Harga Swalayan',
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                                DataColumn(
-                                  label: Text(
-                                    'Harga Reseller',
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                                DataColumn(
-                                  label: Text(
-                                    'Harga Konsumen',
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                              rows: [
-                                for (var item in notifier.getProducts)
-                                  DataRow(
-                                    cells: [
-                                      DataCell(
-                                        Text(item.id!),
-                                      ),
-                                      DataCell(
-                                        Text(
-                                          item.productName!,
+                return Consumer<ProductProvider>(
+                  builder: (_, notifier, __) => notifier.getProducts.isEmpty
+                      ? Expanded(
+                          child: Center(
+                            child: Text(
+                              "Tidak ada data",
+                              style: TextStyle(
+                                fontSize: 20.sp,
+                              ),
+                            ),
+                          ),
+                        )
+                      : Expanded(
+                          child: Scrollbar(
+                            controller: _verticalScroll,
+                            child: Scrollbar(
+                              controller: _horizontalScroll,
+                              child: SingleChildScrollView(
+                                controller: _verticalScroll,
+                                child: SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  controller: _horizontalScroll,
+                                  child: DataTable(
+                                    headingRowColor:
+                                        MaterialStateProperty.all(MyColor.blue),
+                                    columns: const [
+                                      DataColumn(
+                                        label: Text(
+                                          'ID',
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                          ),
                                         ),
                                       ),
-                                      DataCell(
-                                        Text(
-                                          item.netto!.toString(),
+                                      DataColumn(
+                                        label: Text(
+                                          'Nama Produk',
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                          ),
                                         ),
                                       ),
-                                      DataCell(
-                                        Text(
-                                          item.hargaAgen!.toString(),
+                                      DataColumn(
+                                        label: Text(
+                                          'Netto',
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                          ),
                                         ),
                                       ),
-                                      DataCell(
-                                        Text(
-                                          item.hargaDistributor!.toString(),
+                                      DataColumn(
+                                        label: Text(
+                                          'Harga Agen',
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                          ),
                                         ),
                                       ),
-                                      DataCell(
-                                        Text(
-                                          item.hargaSwalayan!.toString(),
+                                      DataColumn(
+                                        label: Text(
+                                          'Harga Distributor',
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                          ),
                                         ),
                                       ),
-                                      DataCell(
-                                        Text(
-                                          item.hargaReseller!.toString(),
+                                      DataColumn(
+                                        label: Text(
+                                          'Harga Swalayan',
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                          ),
                                         ),
                                       ),
-                                      DataCell(
-                                        Text(
-                                          item.hargaKonsumen!.toString(),
+                                      DataColumn(
+                                        label: Text(
+                                          'Harga Reseller',
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                      DataColumn(
+                                        label: Text(
+                                          'Harga Konsumen',
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                      DataColumn(
+                                        label: Text(
+                                          'Aksi',
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                          ),
                                         ),
                                       ),
                                     ],
+                                    rows: [
+                                      for (var item in notifier.getProducts)
+                                        if (!item.isDeleted!)
+                                          DataRow(
+                                            cells: [
+                                              DataCell(
+                                                Text(item.id!),
+                                              ),
+                                              DataCell(
+                                                Text(
+                                                  item.productName!,
+                                                ),
+                                              ),
+                                              DataCell(
+                                                Text(
+                                                  item.netto!.toString(),
+                                                ),
+                                              ),
+                                              DataCell(
+                                                Text(
+                                                  item.hargaAgen!.toString(),
+                                                ),
+                                              ),
+                                              DataCell(
+                                                Text(
+                                                  item.hargaDistributor!
+                                                      .toString(),
+                                                ),
+                                              ),
+                                              DataCell(
+                                                Text(
+                                                  item.hargaSwalayan!
+                                                      .toString(),
+                                                ),
+                                              ),
+                                              DataCell(
+                                                Text(
+                                                  item.hargaReseller!
+                                                      .toString(),
+                                                ),
+                                              ),
+                                              DataCell(
+                                                Text(
+                                                  item.hargaKonsumen!
+                                                      .toString(),
+                                                ),
+                                              ),
+                                              DataCell(
+                                                Row(
+                                                  children: [
+                                                    ElevatedButton(
+                                                      onPressed: () {},
+                                                      style: ElevatedButton
+                                                          .styleFrom(
+                                                        shape:
+                                                            RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(5),
+                                                        ),
+                                                        backgroundColor:
+                                                            Colors.green,
+                                                      ),
+                                                      child: const Icon(
+                                                          Icons.edit_rounded),
+                                                    ),
+                                                    SizedBox(width: 5.w),
+                                                    ElevatedButton(
+                                                      onPressed: () {
+                                                        productProv.delete(
+                                                          productModel: item,
+                                                        );
+                                                      },
+                                                      style: ElevatedButton
+                                                          .styleFrom(
+                                                        shape:
+                                                            RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(5),
+                                                        ),
+                                                        backgroundColor:
+                                                            Colors.red,
+                                                      ),
+                                                      child: const Icon(
+                                                        Icons.delete_rounded,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                    ],
                                   ),
-                              ],
+                                ),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ),
-                  ),
                 );
               },
             )
