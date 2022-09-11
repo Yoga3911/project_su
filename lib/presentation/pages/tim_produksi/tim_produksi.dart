@@ -34,41 +34,41 @@ class _TimProduksiPageState extends State<TimProduksiPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder<QuerySnapshot>(
-        future: MyCollection.users.where("isAdmin", isEqualTo: false).get(),
-        builder: (_, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(
-                color: MyColor.blue,
-              ),
-            );
-          }
-          if (snapshot.data!.docs.isEmpty) {
-            return Center(
-              child: Text(
-                "Tidak ada data",
-                style: TextStyle(
-                  fontSize: 20.sp,
-                ),
-              ),
-            );
-          }
-          final data = snapshot.data!.docs
-              as List<QueryDocumentSnapshot<Map<String, dynamic>>>;
-
-          return Padding(
-            padding: EdgeInsets.only(right: 5.w),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: 50.h),
-                Text(
-                  "Tim Produksi Sari Nikmat",
-                  style: TextStyle(fontSize: 24.sp),
-                ),
-                SizedBox(height: 20.h),
-                Expanded(
+      body: Padding(
+        padding: EdgeInsets.only(right: 5.w),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: 50.h),
+            Text(
+              "Tim Produksi Sari Nikmat",
+              style: TextStyle(fontSize: 24.sp),
+            ),
+            SizedBox(height: 20.h),
+            FutureBuilder<QuerySnapshot>(
+              future:
+                  MyCollection.users.where("isAdmin", isEqualTo: false).get(),
+              builder: (_, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(
+                      color: MyColor.blue,
+                    ),
+                  );
+                }
+                if (snapshot.data!.docs.isEmpty) {
+                  return Center(
+                    child: Text(
+                      "Tidak ada data",
+                      style: TextStyle(
+                        fontSize: 20.sp,
+                      ),
+                    ),
+                  );
+                }
+                final data = snapshot.data!.docs
+                    as List<QueryDocumentSnapshot<Map<String, dynamic>>>;
+                return Expanded(
                   child: Scrollbar(
                     controller: _verticalScroll,
                     child: Scrollbar(
@@ -153,11 +153,11 @@ class _TimProduksiPageState extends State<TimProduksiPage> {
                                         "${getMonth(DateTime.fromMillisecondsSinceEpoch(item.data()["createdAt"]), DateTime.now())}")),
                                     DataCell(
                                       IconButton(
-                                          onPressed: () {},
-                                          splashRadius: 20,
-                                          icon:
-                                              const Icon(Icons.delete_rounded),
-                                          color: Colors.red),
+                                        onPressed: () {},
+                                        splashRadius: 20,
+                                        icon: const Icon(Icons.delete_rounded),
+                                        color: Colors.red,
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -167,11 +167,11 @@ class _TimProduksiPageState extends State<TimProduksiPage> {
                       ),
                     ),
                   ),
-                ),
-              ],
-            ),
-          );
-        },
+                );
+              },
+            )
+          ],
+        ),
       ),
     );
   }

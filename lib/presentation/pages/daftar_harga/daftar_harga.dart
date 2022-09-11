@@ -1,22 +1,189 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
+import 'package:project/presentation/pages/daftar_harga/widgets/add_product.dart';
 
-class DaftarHargaPage extends StatelessWidget {
+import '../../../constants/collection.dart';
+import '../../../constants/color.dart';
+import '../tim_produksi/tim_produksi.dart';
+
+class DaftarHargaPage extends StatefulWidget {
   const DaftarHargaPage({super.key});
+
+  @override
+  State<DaftarHargaPage> createState() => _DaftarHargaPageState();
+}
+
+class _DaftarHargaPageState extends State<DaftarHargaPage> {
+  late ScrollController _verticalScroll;
+  late ScrollController _horizontalScroll;
+
+  @override
+  void initState() {
+    _verticalScroll = ScrollController();
+    _horizontalScroll = ScrollController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _verticalScroll.dispose();
+    _horizontalScroll.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () => showDialog(
+          context: context,
+          builder: (_) => const AddProductDialog(),
+        ),
+        label: Row(
+          children: [
+            const Icon(Icons.add_box_rounded),
+            SizedBox(width: 3.w),
+            const Text("Tambah"),
+          ],
+        ),
+      ),
       body: Padding(
         padding: EdgeInsets.only(right: 5.w),
-        child: ListView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                ElevatedButton(onPressed: () {}, child: const Text("Tambah"))
-              ],
+            SizedBox(height: 50.h),
+            Text(
+              "Daftar Harga Produk",
+              style: TextStyle(fontSize: 24.sp),
+            ),
+            SizedBox(height: 20.h),
+            FutureBuilder<QuerySnapshot>(
+              future:
+                  MyCollection.users.where("isAdmin", isEqualTo: false).get(),
+              builder: (_, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(
+                      color: MyColor.blue,
+                    ),
+                  );
+                }
+                if (snapshot.data!.docs.isEmpty) {
+                  return Center(
+                    child: Text(
+                      "Tidak ada data",
+                      style: TextStyle(
+                        fontSize: 20.sp,
+                      ),
+                    ),
+                  );
+                }
+                final data = snapshot.data!.docs
+                    as List<QueryDocumentSnapshot<Map<String, dynamic>>>;
+                return Expanded(
+                  child: Scrollbar(
+                    controller: _verticalScroll,
+                    child: Scrollbar(
+                      controller: _horizontalScroll,
+                      child: SingleChildScrollView(
+                        controller: _verticalScroll,
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          controller: _horizontalScroll,
+                          child: DataTable(
+                            headingRowColor:
+                                MaterialStateProperty.all(MyColor.blue),
+                            columns: const [
+                              DataColumn(
+                                label: Text(
+                                  'ID',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                              DataColumn(
+                                label: Text(
+                                  'Nama',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                              DataColumn(
+                                label: Text(
+                                  'Tanggal Diterima',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                              DataColumn(
+                                label: Text(
+                                  'Masa Kerja',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                              DataColumn(
+                                label: Text(
+                                  'Aksi',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ],
+                            rows: [
+                              for (var item in data)
+                                DataRow(
+                                  cells: [
+                                    DataCell(Text(item.id)),
+                                    DataCell(Text(item.data()["fullName"])),
+                                    DataCell(
+                                      Text(
+                                        DateFormat('dd-MMMM-yyyy', 'in_ID')
+                                            .format(
+                                          DateTime.fromMillisecondsSinceEpoch(
+                                            item.data()["createdAt"],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    DataCell(Text(
+                                        "${getMonth(DateTime.fromMillisecondsSinceEpoch(item.data()["createdAt"]), DateTime.now())}")),
+                                    DataCell(
+                                      IconButton(
+                                        onPressed: () {},
+                                        splashRadius: 20,
+                                        icon: const Icon(Icons.delete_rounded),
+                                        color: Colors.red,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              },
             )
           ],
         ),
