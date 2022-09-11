@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:project/constants/fonts.dart';
 import 'package:project/presentation/pages/daftar_harga/widgets/add_product.dart';
 import 'package:project/presentation/providers/product_provider.dart';
+import 'package:project/utils/loading.dart';
+import 'package:project/utils/snackbar.dart';
 import 'package:provider/provider.dart';
 
 import '../../../constants/color.dart';
+import '../../../utils/currency.dart';
 
 class DaftarHargaPage extends StatefulWidget {
   const DaftarHargaPage({super.key});
@@ -203,36 +207,31 @@ class _DaftarHargaPageState extends State<DaftarHargaPage> {
                                               ),
                                               DataCell(
                                                 Text(
-                                                  item.netto!.toString(),
+                                                  "${item.netto!} gr",
                                                 ),
                                               ),
                                               DataCell(
                                                 Text(
-                                                  item.hargaAgen!.toString(),
+                                                    "Rp ${currency(item.hargaAgen!)}"),
+                                              ),
+                                              DataCell(
+                                                Text(
+                                                  "Rp ${currency(item.hargaDistributor!)}",
                                                 ),
                                               ),
                                               DataCell(
                                                 Text(
-                                                  item.hargaDistributor!
-                                                      .toString(),
+                                                  "Rp ${currency(item.hargaSwalayan!)}",
                                                 ),
                                               ),
                                               DataCell(
                                                 Text(
-                                                  item.hargaSwalayan!
-                                                      .toString(),
+                                                  "Rp ${currency(item.hargaReseller!)}",
                                                 ),
                                               ),
                                               DataCell(
                                                 Text(
-                                                  item.hargaReseller!
-                                                      .toString(),
-                                                ),
-                                              ),
-                                              DataCell(
-                                                Text(
-                                                  item.hargaKonsumen!
-                                                      .toString(),
+                                                  "Rp ${currency(item.hargaKonsumen!)}",
                                                 ),
                                               ),
                                               DataCell(
@@ -257,8 +256,105 @@ class _DaftarHargaPageState extends State<DaftarHargaPage> {
                                                     SizedBox(width: 5.w),
                                                     ElevatedButton(
                                                       onPressed: () {
-                                                        productProv.delete(
-                                                          productModel: item,
+                                                        showDialog(
+                                                          context: context,
+                                                          builder: (_) =>
+                                                              AlertDialog(
+                                                            title: Text(
+                                                              "Perhatian!",
+                                                              style: TextStyle(
+                                                                fontSize: 18.sp,
+                                                                fontFamily: MyFont
+                                                                    .semiBold,
+                                                              ),
+                                                            ),
+                                                            content: Text(
+                                                              "Apakah anda yakin ingin menghapus produk ini?",
+                                                              style: TextStyle(
+                                                                fontSize: 16.sp,
+                                                                fontFamily:
+                                                                    MyFont
+                                                                        .regular,
+                                                              ),
+                                                            ),
+                                                            actions: [
+                                                              ElevatedButton(
+                                                                style: ElevatedButton
+                                                                    .styleFrom(
+                                                                  shape:
+                                                                      RoundedRectangleBorder(
+                                                                    borderRadius:
+                                                                        BorderRadius
+                                                                            .circular(
+                                                                      5,
+                                                                    ),
+                                                                  ),
+                                                                  backgroundColor:
+                                                                      Colors
+                                                                          .grey,
+                                                                ),
+                                                                onPressed: () =>
+                                                                    Navigator.pop(
+                                                                        context),
+                                                                child:
+                                                                    const Text(
+                                                                  "Batal",
+                                                                ),
+                                                              ),
+                                                              ElevatedButton(
+                                                                style: ElevatedButton
+                                                                    .styleFrom(
+                                                                  shape:
+                                                                      RoundedRectangleBorder(
+                                                                    borderRadius:
+                                                                        BorderRadius
+                                                                            .circular(
+                                                                      5,
+                                                                    ),
+                                                                  ),
+                                                                  backgroundColor:
+                                                                      Colors
+                                                                          .red,
+                                                                ),
+                                                                onPressed: () {
+                                                                  Navigator.pop(
+                                                                    context,
+                                                                  );
+                                                                  showDialog(
+                                                                    context:
+                                                                        context,
+                                                                    builder: (_) =>
+                                                                        const CustomLoading(),
+                                                                  );
+                                                                  productProv
+                                                                      .delete(
+                                                                    productModel:
+                                                                        item,
+                                                                  )
+                                                                      .then(
+                                                                    (value) {
+                                                                      Navigator.pop(
+                                                                          context);
+                                                                      value
+                                                                          ? showSnackbar(
+                                                                              context,
+                                                                              "Produk berhasil dihapus",
+                                                                              Colors
+                                                                                  .green)
+                                                                          : showSnackbar(
+                                                                              context,
+                                                                              "Produk gagal dihapus",
+                                                                              Colors.red);
+                                                                    },
+                                                                  );
+                                                                },
+                                                                child:
+                                                                    const Text(
+                                                                  "Ya",
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
                                                         );
                                                       },
                                                       style: ElevatedButton

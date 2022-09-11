@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:project/data/models/product/product_model.dart';
 
@@ -16,7 +14,6 @@ class ProductProvider with ChangeNotifier {
   factory ProductProvider() => _single;
 
   Future<bool> insert({required ProductModel productModel}) async {
-    log((_products.length + 1).toString());
     final prod = productModel.copyWith(id: "PRD-${_products.length + 1}");
     addProduct = prod;
     return await _productService.insert(productModel: prod);
@@ -37,7 +34,6 @@ class ProductProvider with ChangeNotifier {
 
   set setProducts(List<ProductModel> val) {
     _products = val;
-    // notifyListeners();
   }
 
   List<ProductModel> get getProducts => _products;
