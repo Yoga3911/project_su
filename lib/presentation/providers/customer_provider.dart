@@ -15,7 +15,6 @@ class CustomerProvider with ChangeNotifier {
   factory CustomerProvider() => _single;
 
   Future<bool> insert({required CustomerModel customerModel}) async {
-    
     final cust = customerModel.copyWith(id: "CST-${_customers.length + 1}");
     addProduct = cust;
     return await _customerService.insert(customerModel: cust);
@@ -54,7 +53,6 @@ class CustomerProvider with ChangeNotifier {
 
   set deleteProduct(CustomerModel val) {
     _customers[_customers.indexOf(val)] = val.copyWith(isDeleted: true);
-    inspect(val);
     notifyListeners();
   }
 
@@ -74,4 +72,14 @@ class CustomerProvider with ChangeNotifier {
     editProduct = customerModel;
     return await _customerService.edit(customerModel: customerModel);
   }
+
+  // ! DROPDOWN
+  bool _isTap = false;
+
+  set setIsTap(bool val) {
+    _isTap = val;
+    notifyListeners();
+  }
+
+  bool get getIsTap => _isTap;
 }

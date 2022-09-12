@@ -60,7 +60,7 @@ class _PelangganPageState extends State<PelangganPage> {
           children: [
             SizedBox(height: 50.h),
             Text(
-              "Daftar Harga Produk",
+              "Daftar Pelanggan",
               style: TextStyle(fontSize: 24.sp),
             ),
             SizedBox(height: 20.h),
@@ -177,15 +177,22 @@ class _PelangganPageState extends State<PelangganPage> {
                                               ),
                                               DataCell(
                                                 Text(
-                                                  "${item.address} gr",
+                                                  "${item.address}",
                                                 ),
                                               ),
                                               DataCell(
-                                                Text("Rp ${item.telp}"),
+                                                Text("${item.telp}"),
                                               ),
                                               DataCell(
                                                 Text(
-                                                  "Rp ${item.priceCategory}",
+                                                  item.priceCategory == 1
+                                                      ? "Agen"
+                                                      : item.priceCategory == 2
+                                                          ? "Distributor"
+                                                          : item.priceCategory ==
+                                                                  3
+                                                              ? "Swalayan"
+                                                              : "Reseller",
                                                 ),
                                               ),
                                               DataCell(

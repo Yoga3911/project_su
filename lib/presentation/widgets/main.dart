@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:project/presentation/pages/auth/landing.dart';
@@ -31,11 +32,13 @@ class _MainPageState extends State<MainPage>
     ),
   );
 
-  Future<void> checkLogin() async {
+  Future<bool> checkLogin() async {
     final pref = await SharedPreferences.getInstance();
     if (pref.getString("userId") == null) {
       goToLanding();
+      return false;
     }
+    return true;
   }
 
   void goToLanding() {
@@ -44,7 +47,11 @@ class _MainPageState extends State<MainPage>
 
   @override
   void initState() {
-    checkLogin();
+    checkLogin().then(
+      (value) {
+        value ? FirebaseAuth.instance.signInAnonymously() : null;
+      },
+    );
     super.initState();
   }
 

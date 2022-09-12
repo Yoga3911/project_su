@@ -54,7 +54,6 @@ class ProductProvider with ChangeNotifier {
 
   set deleteProduct(ProductModel val) {
     _products[_products.indexOf(val)] = val.copyWith(isDeleted: true);
-    inspect(val);
     notifyListeners();
   }
 
