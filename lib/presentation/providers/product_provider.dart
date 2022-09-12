@@ -41,7 +41,6 @@ class ProductProvider with ChangeNotifier {
   }
 
   set sortProducts(List<ProductModel> val) {
-    log("sorted");
     val.sort((a, b) => a.createdAt!.compareTo(b.createdAt!));
   }
 
