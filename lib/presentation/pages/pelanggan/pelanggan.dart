@@ -77,7 +77,7 @@ class _PelangganPageState extends State<PelangganPage> {
                     decoration: InputDecoration(
                       isDense: true,
                       contentPadding: EdgeInsets.all(10.h),
-                      prefixIcon: const Icon(Icons.person_rounded),
+                      prefixIcon: const Icon(Icons.search_rounded),
                       hintText: "Ketik sesuatu ...",
                       label: const Text("Cari Pelanggan"),
                       filled: true,

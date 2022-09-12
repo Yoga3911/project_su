@@ -57,7 +57,6 @@ class CustomerProvider with ChangeNotifier {
   }
 
   set sortCustomer(List<CustomerModel> val) {
-    log("sorted");
     val.sort((a, b) => a.createdAt!.compareTo(b.createdAt!));
   }
 
