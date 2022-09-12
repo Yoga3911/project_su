@@ -38,6 +38,7 @@ class _PelangganPageState extends State<PelangganPage> {
   @override
   Widget build(BuildContext context) {
     final customerProv = context.read<CustomerProvider>();
+
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => showDialog(
@@ -59,9 +60,44 @@ class _PelangganPageState extends State<PelangganPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 50.h),
-            Text(
-              "Daftar Pelanggan",
-              style: TextStyle(fontSize: 24.sp),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  "Daftar Pelanggan",
+                  style: TextStyle(fontSize: 24.sp),
+                ),
+                SizedBox(
+                  width: 100.w,
+                  child: TextField(
+                    onChanged: (val) {
+                      customerProv.searchCustomer(val);
+                    },
+                    decoration: InputDecoration(
+                      isDense: true,
+                      contentPadding: EdgeInsets.all(10.h),
+                      prefixIcon: const Icon(Icons.person_rounded),
+                      hintText: "Ketik sesuatu ...",
+                      label: const Text("Cari Pelanggan"),
+                      filled: true,
+                      fillColor: MyColor.grey,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5),
+                        borderSide: const BorderSide(color: Colors.transparent),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5),
+                        borderSide: const BorderSide(color: Colors.transparent),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5),
+                        borderSide: const BorderSide(color: MyColor.blue),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
             SizedBox(height: 20.h),
             FutureBuilder<void>(
@@ -74,9 +110,8 @@ class _PelangganPageState extends State<PelangganPage> {
                     ),
                   );
                 }
-
                 return Consumer<CustomerProvider>(
-                  builder: (_, notifier, __) => notifier.getProducts.isEmpty
+                  builder: (_, notifier, __) => notifier.getCustomer.isEmpty
                       ? Expanded(
                           child: Center(
                             child: Text(
@@ -163,7 +198,8 @@ class _PelangganPageState extends State<PelangganPage> {
                                       ),
                                     ],
                                     rows: [
-                                      for (var item in notifier.getProducts)
+                                      for (var item
+                                          in customerProv.getCustomerFilter)
                                         if (!item.isDeleted!)
                                           DataRow(
                                             cells: [

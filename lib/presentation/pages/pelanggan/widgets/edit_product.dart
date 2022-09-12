@@ -9,6 +9,7 @@ import 'package:project/utils/snackbar.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../constants/color.dart';
+import 'category_dropdown.dart';
 
 class EditCustomerDialog extends StatefulWidget {
   final CustomerModel customerModel;
@@ -60,6 +61,7 @@ class _EditCustomerDialogState extends State<EditCustomerDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final prov = context.read<CustomerProvider>();
     return AlertDialog(
       scrollable: true,
       title: Row(
@@ -154,6 +156,33 @@ class _EditCustomerDialogState extends State<EditCustomerDialog> {
               ),
             ),
             SizedBox(height: 20.h),
+            TextField(
+              controller: _kategoriHarga,
+              readOnly: true,
+              onTap: () {
+                prov.setIsTap = !prov.getIsTap;
+              },
+              decoration: InputDecoration(
+                prefixIcon: const Icon(Icons.price_change_rounded),
+                label: const Text("Kategori Harga"),
+                filled: true,
+                fillColor: MyColor.grey,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: const BorderSide(color: Colors.transparent),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: const BorderSide(color: Colors.transparent),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: const BorderSide(color: MyColor.blue),
+                ),
+              ),
+            ),
+            SizedBox(height: 10.h),
+            PriceCategoryDropdown(controller: _kategoriHarga),
           ],
         ),
       ),
@@ -177,6 +206,13 @@ class _EditCustomerDialogState extends State<EditCustomerDialog> {
               builder: (_) => const CustomLoading(),
             );
             final dateOnMili = DateTime.now().millisecondsSinceEpoch;
+            _kategoriHarga.text = _kategoriHarga.text == "Agen"
+                ? "1"
+                : _kategoriHarga.text == "Distributor"
+                    ? "2"
+                    : _kategoriHarga.text == "Swalayan"
+                        ? "3"
+                        : "4";
             context
                 .read<CustomerProvider>()
                 .edit(
@@ -184,7 +220,7 @@ class _EditCustomerDialogState extends State<EditCustomerDialog> {
                     name: _namaPelanggan.text,
                     address: _alamat.text,
                     telp: _nomorTelp.text,
-                    priceCategory: int.parse(_kategoriHarga.text),
+                    priceCategory: int.tryParse(_kategoriHarga.text) ?? 0,
                     updatedAt: dateOnMili,
                   ),
                 )
@@ -194,12 +230,12 @@ class _EditCustomerDialogState extends State<EditCustomerDialog> {
                 value
                     ? showSnackbar(
                         context,
-                        "Produk berhasil ditambahkan",
+                        "Produk berhasil diubah",
                         Colors.green,
                       )
                     : showSnackbar(
                         context,
-                        "Produk gagal ditambahkan",
+                        "Produk gagal diubah",
                         Colors.red,
                       );
               },

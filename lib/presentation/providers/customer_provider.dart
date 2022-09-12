@@ -21,30 +21,48 @@ class CustomerProvider with ChangeNotifier {
   }
 
   List<CustomerModel> _customers = [];
+  List<CustomerModel> _customersFilter = [];
+
+  void searchCustomer(String val) {
+    if (val.isEmpty) {
+      _customersFilter = _customers;
+    } else {
+      _customersFilter = _customersFilter
+          .where(
+            (element) => element.name!.contains(val),
+          )
+          .toList();
+    }
+
+    notifyListeners();
+  }
+
   Future<void> getAll() async {
     final response = await _customerService.getAll();
     if (response == false) {
       return;
     }
 
-    setProducts = <CustomerModel>[
+    setCustomer = <CustomerModel>[
       for (var i in response.docs)
         CustomerModel.fromJson(i.data() as Map<String, dynamic>)
     ];
 
-    sortProducts = _customers;
+    sortCustomer = _customers;
   }
 
-  set setProducts(List<CustomerModel> val) {
+  set setCustomer(List<CustomerModel> val) {
     _customers = val;
+    _customersFilter = val;
   }
 
-  set sortProducts(List<CustomerModel> val) {
+  set sortCustomer(List<CustomerModel> val) {
     log("sorted");
     val.sort((a, b) => a.createdAt!.compareTo(b.createdAt!));
   }
 
-  List<CustomerModel> get getProducts => _customers;
+  List<CustomerModel> get getCustomer => _customers;
+  List<CustomerModel> get getCustomerFilter => _customersFilter;
 
   set addProduct(CustomerModel val) {
     _customers.add(val);
