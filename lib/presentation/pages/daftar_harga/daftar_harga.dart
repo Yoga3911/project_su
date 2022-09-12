@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:project/constants/fonts.dart';
 import 'package:project/presentation/pages/daftar_harga/widgets/add_product.dart';
+import 'package:project/presentation/pages/daftar_harga/widgets/edit_product.dart';
 import 'package:project/presentation/providers/product_provider.dart';
 import 'package:project/utils/loading.dart';
 import 'package:project/utils/snackbar.dart';
@@ -238,7 +239,14 @@ class _DaftarHargaPageState extends State<DaftarHargaPage> {
                                                 Row(
                                                   children: [
                                                     ElevatedButton(
-                                                      onPressed: () {},
+                                                      onPressed: () =>
+                                                          showDialog(
+                                                        context: context,
+                                                        builder: (_) =>
+                                                            EditProductDialog(
+                                                          productModel: item,
+                                                        ),
+                                                      ),
                                                       style: ElevatedButton
                                                           .styleFrom(
                                                         shape:

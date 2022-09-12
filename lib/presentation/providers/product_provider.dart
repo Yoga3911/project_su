@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:project/data/models/product/product_model.dart';
 
@@ -30,10 +32,17 @@ class ProductProvider with ChangeNotifier {
       for (var i in response.docs)
         ProductModel.fromJson(i.data() as Map<String, dynamic>)
     ];
+
+    sortProducts = _products;
   }
 
   set setProducts(List<ProductModel> val) {
     _products = val;
+  }
+
+  set sortProducts(List<ProductModel> val) {
+    log("sorted");
+    val.sort((a, b) => a.createdAt!.compareTo(b.createdAt!));
   }
 
   List<ProductModel> get getProducts => _products;
@@ -45,11 +54,24 @@ class ProductProvider with ChangeNotifier {
 
   set deleteProduct(ProductModel val) {
     _products[_products.indexOf(val)] = val.copyWith(isDeleted: true);
+    inspect(val);
+    notifyListeners();
+  }
+
+  set editProduct(ProductModel val) {
+    _products[_products.indexOf(
+        _products.where((element) => element.id == val.id).single)] = val;
+
     notifyListeners();
   }
 
   Future<bool> delete({required ProductModel productModel}) async {
     deleteProduct = productModel;
     return await _productService.delete(productModel: productModel);
+  }
+
+  Future<bool> edit({required ProductModel productModel}) async {
+    editProduct = productModel;
+    return await _productService.edit(productModel: productModel);
   }
 }

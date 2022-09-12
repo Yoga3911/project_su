@@ -8,7 +8,7 @@ class ProductService implements ProductServiceAbs {
   @override
   Future<bool> delete({required ProductModel productModel}) async {
     try {
-      MyCollection.product
+      await MyCollection.product
           .doc(productModel.id)
           .update(productModel.copyWith(isDeleted: true).toJson());
       return true;
@@ -19,9 +19,14 @@ class ProductService implements ProductServiceAbs {
   }
 
   @override
-  Future edit() {
-    // TODO: implement edit
-    throw UnimplementedError();
+  Future<bool> edit({required ProductModel productModel}) async {
+    try {
+      MyCollection.product.doc(productModel.id).update(productModel.toJson());
+      return true;
+    } catch (e) {
+      log(e.toString());
+      return false;
+    }
   }
 
   @override
