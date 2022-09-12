@@ -8,7 +8,7 @@ class ProductService implements ProductServiceAbs {
   @override
   Future<bool> delete({required ProductModel productModel}) async {
     try {
-      await MyCollection.product
+      await MyCollection.products
           .doc(productModel.id)
           .update(productModel.copyWith(isDeleted: true).toJson());
       return true;
@@ -21,7 +21,7 @@ class ProductService implements ProductServiceAbs {
   @override
   Future<bool> edit({required ProductModel productModel}) async {
     try {
-      MyCollection.product.doc(productModel.id).update(productModel.toJson());
+      MyCollection.products.doc(productModel.id).update(productModel.toJson());
       return true;
     } catch (e) {
       log(e.toString());
@@ -32,7 +32,7 @@ class ProductService implements ProductServiceAbs {
   @override
   Future<dynamic> getAll() async {
     try {
-      return await MyCollection.product.get();
+      return await MyCollection.products.get();
     } catch (e) {
       log(e.toString());
       return false;
@@ -42,7 +42,7 @@ class ProductService implements ProductServiceAbs {
   @override
   Future<bool> insert({required ProductModel productModel}) async {
     try {
-      MyCollection.product.doc(productModel.id).set(productModel.toJson());
+      MyCollection.products.doc(productModel.id).set(productModel.toJson());
       return true;
     } catch (e) {
       log(e.toString());

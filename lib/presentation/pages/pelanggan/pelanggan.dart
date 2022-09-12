@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:project/constants/fonts.dart';
-import 'package:project/presentation/pages/daftar_harga/widgets/add_product.dart';
-import 'package:project/presentation/pages/daftar_harga/widgets/edit_product.dart';
-import 'package:project/presentation/providers/product_provider.dart';
+import 'package:project/presentation/pages/pelanggan/widgets/add_product.dart';
+import 'package:project/presentation/pages/pelanggan/widgets/edit_product.dart';
+import 'package:project/presentation/providers/customer_provider.dart';
 import 'package:project/utils/loading.dart';
 import 'package:project/utils/snackbar.dart';
 import 'package:provider/provider.dart';
 
 import '../../../constants/color.dart';
-import '../../../utils/currency.dart';
 
 class PelangganPage extends StatefulWidget {
   const PelangganPage({super.key});
@@ -38,13 +37,13 @@ class _PelangganPageState extends State<PelangganPage> {
 
   @override
   Widget build(BuildContext context) {
-    final productProv = context.read<ProductProvider>();
+    final customerProv = context.read<CustomerProvider>();
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => showDialog(
           barrierDismissible: false,
           context: context,
-          builder: (_) => const AddProductDialog(),
+          builder: (_) => const AddCustomerDialog(),
         ),
         label: Row(
           children: [
@@ -66,7 +65,7 @@ class _PelangganPageState extends State<PelangganPage> {
             ),
             SizedBox(height: 20.h),
             FutureBuilder<void>(
-              future: productProv.getAll(),
+              future: customerProv.getAll(),
               builder: (_, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(
@@ -76,7 +75,7 @@ class _PelangganPageState extends State<PelangganPage> {
                   );
                 }
 
-                return Consumer<ProductProvider>(
+                return Consumer<CustomerProvider>(
                   builder: (_, notifier, __) => notifier.getProducts.isEmpty
                       ? Expanded(
                           child: Center(
@@ -114,7 +113,7 @@ class _PelangganPageState extends State<PelangganPage> {
                                       ),
                                       DataColumn(
                                         label: Text(
-                                          'Nama Produk',
+                                          'Nama Pelanggan',
                                           style: TextStyle(
                                             fontSize: 18,
                                             fontWeight: FontWeight.bold,
@@ -124,7 +123,7 @@ class _PelangganPageState extends State<PelangganPage> {
                                       ),
                                       DataColumn(
                                         label: Text(
-                                          'Netto',
+                                          'Alamat',
                                           style: TextStyle(
                                             fontSize: 18,
                                             fontWeight: FontWeight.bold,
@@ -134,7 +133,7 @@ class _PelangganPageState extends State<PelangganPage> {
                                       ),
                                       DataColumn(
                                         label: Text(
-                                          'Harga Agen',
+                                          'No Telepon',
                                           style: TextStyle(
                                             fontSize: 18,
                                             fontWeight: FontWeight.bold,
@@ -144,37 +143,7 @@ class _PelangganPageState extends State<PelangganPage> {
                                       ),
                                       DataColumn(
                                         label: Text(
-                                          'Harga Distributor',
-                                          style: TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ),
-                                      DataColumn(
-                                        label: Text(
-                                          'Harga Swalayan',
-                                          style: TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ),
-                                      DataColumn(
-                                        label: Text(
-                                          'Harga Reseller',
-                                          style: TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ),
-                                      DataColumn(
-                                        label: Text(
-                                          'Harga Konsumen',
+                                          'Kategori Harga',
                                           style: TextStyle(
                                             fontSize: 18,
                                             fontWeight: FontWeight.bold,
@@ -203,36 +172,20 @@ class _PelangganPageState extends State<PelangganPage> {
                                               ),
                                               DataCell(
                                                 Text(
-                                                  item.productName!,
+                                                  item.name!,
                                                 ),
                                               ),
                                               DataCell(
                                                 Text(
-                                                  "${item.netto!} gr",
+                                                  "${item.address} gr",
                                                 ),
                                               ),
                                               DataCell(
-                                                Text(
-                                                    "Rp ${currency(item.hargaAgen!)}"),
+                                                Text("Rp ${item.telp}"),
                                               ),
                                               DataCell(
                                                 Text(
-                                                  "Rp ${currency(item.hargaDistributor!)}",
-                                                ),
-                                              ),
-                                              DataCell(
-                                                Text(
-                                                  "Rp ${currency(item.hargaSwalayan!)}",
-                                                ),
-                                              ),
-                                              DataCell(
-                                                Text(
-                                                  "Rp ${currency(item.hargaReseller!)}",
-                                                ),
-                                              ),
-                                              DataCell(
-                                                Text(
-                                                  "Rp ${currency(item.hargaKonsumen!)}",
+                                                  "Rp ${item.priceCategory}",
                                                 ),
                                               ),
                                               DataCell(
@@ -243,8 +196,8 @@ class _PelangganPageState extends State<PelangganPage> {
                                                           showDialog(
                                                         context: context,
                                                         builder: (_) =>
-                                                            EditProductDialog(
-                                                          productModel: item,
+                                                            EditCustomerDialog(
+                                                          customerModel: item,
                                                         ),
                                                       ),
                                                       style: ElevatedButton
@@ -334,9 +287,9 @@ class _PelangganPageState extends State<PelangganPage> {
                                                                     builder: (_) =>
                                                                         const CustomLoading(),
                                                                   );
-                                                                  productProv
+                                                                  customerProv
                                                                       .delete(
-                                                                    productModel:
+                                                                    customerModel:
                                                                         item,
                                                                   )
                                                                       .then(

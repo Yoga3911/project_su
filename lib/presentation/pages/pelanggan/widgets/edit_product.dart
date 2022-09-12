@@ -2,62 +2,59 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:project/constants/fonts.dart';
-import 'package:project/data/models/product/product_model.dart';
-import 'package:project/presentation/providers/product_provider.dart';
+import 'package:project/data/models/customer/customer_model.dart';
+import 'package:project/presentation/providers/customer_provider.dart';
 import 'package:project/utils/loading.dart';
 import 'package:project/utils/snackbar.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../constants/color.dart';
 
-class EditProductDialog extends StatefulWidget {
-  final ProductModel productModel;
-  const EditProductDialog({
+class EditCustomerDialog extends StatefulWidget {
+  final CustomerModel customerModel;
+  const EditCustomerDialog({
     super.key,
-    required this.productModel,
+    required this.customerModel,
   });
 
   @override
-  State<EditProductDialog> createState() => _EditProductDialogState();
+  State<EditCustomerDialog> createState() => _EditCustomerDialogState();
 }
 
-class _EditProductDialogState extends State<EditProductDialog> {
-  late TextEditingController _namaProduk;
-  late TextEditingController _netto;
-  late TextEditingController _hargaAgen;
-  late TextEditingController _hargaDistributor;
-  late TextEditingController _hargaSwalayan;
-  late TextEditingController _hargaReseller;
-  late TextEditingController _hargaKonsumen;
+class _EditCustomerDialogState extends State<EditCustomerDialog> {
+  late TextEditingController _namaPelanggan;
+  late TextEditingController _alamat;
+  late TextEditingController _nomorTelp;
+  late TextEditingController _kategoriHarga;
 
   @override
   void initState() {
-    _namaProduk = TextEditingController();
-    _netto = TextEditingController();
-    _hargaAgen = TextEditingController();
-    _hargaDistributor = TextEditingController();
-    _hargaSwalayan = TextEditingController();
-    _hargaReseller = TextEditingController();
-    _hargaKonsumen = TextEditingController();
-    _namaProduk.text = widget.productModel.productName!;
-    _netto.text = widget.productModel.netto.toString();
-    _hargaAgen.text = widget.productModel.hargaAgen.toString();
-    _hargaDistributor.text = widget.productModel.hargaAgen.toString();
-    _hargaSwalayan.text = widget.productModel.hargaSwalayan.toString();
-    _hargaReseller.text = widget.productModel.hargaReseller.toString();
-    _hargaKonsumen.text = widget.productModel.hargaKonsumen.toString();
+    _namaPelanggan = TextEditingController();
+    _alamat = TextEditingController();
+    _nomorTelp = TextEditingController();
+    _kategoriHarga = TextEditingController();
+    _namaPelanggan.text = widget.customerModel.name!;
+    _alamat.text = widget.customerModel.address!;
+    _nomorTelp.text = widget.customerModel.telp!;
+    final category = widget.customerModel.priceCategory!;
+    _kategoriHarga.text = category == 1
+        ? "Agen"
+        : category == 2
+            ? "Distributor"
+            : category == 3
+                ? "Swalayan"
+                : category == 1
+                    ? "Reseller"
+                    : "Konsumen";
     super.initState();
   }
 
   @override
   void dispose() {
-    _namaProduk.dispose();
-    _netto.dispose();
-    _hargaAgen.dispose();
-    _hargaDistributor.dispose();
-    _hargaSwalayan.dispose();
-    _hargaReseller.dispose();
-    _hargaKonsumen.dispose();
+    _namaPelanggan.dispose();
+    _alamat.dispose();
+    _nomorTelp.dispose();
+    _kategoriHarga.dispose();
     super.dispose();
   }
 
@@ -86,11 +83,11 @@ class _EditProductDialogState extends State<EditProductDialog> {
         child: Column(
           children: [
             TextField(
-              controller: _namaProduk,
+              controller: _namaPelanggan,
               decoration: InputDecoration(
                 prefixIcon: const Icon(Icons.shopping_cart_rounded),
-                hintText: "Singkong Rebus",
-                label: const Text("Nama Produk"),
+                hintText: "Budi Santoso",
+                label: const Text("Nama Pelanggan"),
                 filled: true,
                 fillColor: MyColor.grey,
                 border: OutlineInputBorder(
@@ -109,14 +106,11 @@ class _EditProductDialogState extends State<EditProductDialog> {
             ),
             SizedBox(height: 20.h),
             TextField(
-              controller: _netto,
-              inputFormatters: [
-                FilteringTextInputFormatter.allow(RegExp("[0-9.]"))
-              ],
+              controller: _alamat,
               decoration: InputDecoration(
                 prefixIcon: const Icon(Icons.scale_rounded),
-                hintText: "350",
-                label: const Text("Netto (Gram)"),
+                hintText: "Jl. Mawar 12 no 101",
+                label: const Text("Alamat"),
                 filled: true,
                 fillColor: MyColor.grey,
                 border: OutlineInputBorder(
@@ -135,14 +129,14 @@ class _EditProductDialogState extends State<EditProductDialog> {
             ),
             SizedBox(height: 20.h),
             TextField(
-              controller: _hargaAgen,
+              controller: _nomorTelp,
               inputFormatters: [
-                FilteringTextInputFormatter.allow(RegExp("[0-9.]"))
+                FilteringTextInputFormatter.allow(RegExp("[0-9]"))
               ],
               decoration: InputDecoration(
                 prefixIcon: const Icon(Icons.attach_money_rounded),
-                hintText: "10000",
-                label: const Text("Harga Agen (Rp)"),
+                hintText: "08881231231",
+                label: const Text("Nomor Telepon"),
                 filled: true,
                 fillColor: MyColor.grey,
                 border: OutlineInputBorder(
@@ -160,109 +154,6 @@ class _EditProductDialogState extends State<EditProductDialog> {
               ),
             ),
             SizedBox(height: 20.h),
-            TextField(
-              controller: _hargaDistributor,
-              inputFormatters: [
-                FilteringTextInputFormatter.allow(RegExp("[0-9.]"))
-              ],
-              decoration: InputDecoration(
-                prefixIcon: const Icon(Icons.attach_money_rounded),
-                hintText: "10000",
-                label: const Text("Harga Distributor (Rp)"),
-                filled: true,
-                fillColor: MyColor.grey,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: const BorderSide(color: Colors.transparent),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: const BorderSide(color: Colors.transparent),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: const BorderSide(color: MyColor.blue),
-                ),
-              ),
-            ),
-            SizedBox(height: 20.h),
-            TextField(
-              controller: _hargaSwalayan,
-              inputFormatters: [
-                FilteringTextInputFormatter.allow(RegExp("[0-9.]"))
-              ],
-              decoration: InputDecoration(
-                prefixIcon: const Icon(Icons.attach_money_rounded),
-                hintText: "10000",
-                label: const Text("Harga Swalayan (Rp)"),
-                filled: true,
-                fillColor: MyColor.grey,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: const BorderSide(color: Colors.transparent),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: const BorderSide(color: Colors.transparent),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: const BorderSide(color: MyColor.blue),
-                ),
-              ),
-            ),
-            SizedBox(height: 20.h),
-            TextField(
-              controller: _hargaReseller,
-              inputFormatters: [
-                FilteringTextInputFormatter.allow(RegExp("[0-9.]"))
-              ],
-              decoration: InputDecoration(
-                prefixIcon: const Icon(Icons.attach_money_rounded),
-                hintText: "10000",
-                label: const Text("Harga Reseller (Rp)"),
-                filled: true,
-                fillColor: MyColor.grey,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: const BorderSide(color: Colors.transparent),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: const BorderSide(color: Colors.transparent),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: const BorderSide(color: MyColor.blue),
-                ),
-              ),
-            ),
-            SizedBox(height: 20.h),
-            TextField(
-              controller: _hargaKonsumen,
-              inputFormatters: [
-                FilteringTextInputFormatter.allow(RegExp("[0-9.]"))
-              ],
-              decoration: InputDecoration(
-                prefixIcon: const Icon(Icons.attach_money_rounded),
-                hintText: "10000",
-                label: const Text("Harga Konsumen (Rp)"),
-                filled: true,
-                fillColor: MyColor.grey,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: const BorderSide(color: Colors.transparent),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: const BorderSide(color: Colors.transparent),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: const BorderSide(color: MyColor.blue),
-                ),
-              ),
-            ),
           ],
         ),
       ),
@@ -287,16 +178,13 @@ class _EditProductDialogState extends State<EditProductDialog> {
             );
             final dateOnMili = DateTime.now().millisecondsSinceEpoch;
             context
-                .read<ProductProvider>()
+                .read<CustomerProvider>()
                 .edit(
-                  productModel: widget.productModel.copyWith(
-                    productName: _namaProduk.text,
-                    hargaAgen: int.parse(_hargaAgen.text),
-                    hargaDistributor: int.parse(_hargaDistributor.text),
-                    hargaSwalayan: int.parse(_hargaSwalayan.text),
-                    hargaReseller: int.parse(_hargaKonsumen.text),
-                    hargaKonsumen: int.parse(_hargaKonsumen.text),
-                    netto: int.parse(_netto.text),
+                  customerModel: widget.customerModel.copyWith(
+                    name: _namaPelanggan.text,
+                    address: _alamat.text,
+                    telp: _nomorTelp.text,
+                    priceCategory: int.parse(_kategoriHarga.text),
                     updatedAt: dateOnMili,
                   ),
                 )

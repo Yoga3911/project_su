@@ -5,6 +5,8 @@ class MyCollection {
 
   static final CollectionReference users =
       FirebaseFirestore.instance.collection("users");
-  static final CollectionReference product =
+  static final CollectionReference products =
       FirebaseFirestore.instance.collection("products");
+  static final CollectionReference customers =
+      FirebaseFirestore.instance.collection("customers");
 }

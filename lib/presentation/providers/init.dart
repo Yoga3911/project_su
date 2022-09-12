@@ -1,4 +1,5 @@
 import 'package:project/presentation/providers/auth_provider.dart';
+import 'package:project/presentation/providers/customer_provider.dart';
 import 'package:project/presentation/providers/page_provider.dart';
 import 'package:project/presentation/providers/product_provider.dart';
 import 'package:project/presentation/providers/user_provider.dart';
@@ -22,6 +23,9 @@ class MyProvider {
     ),
     ChangeNotifierProvider(
       create: (_) => ProductProvider(),
+    ),
+    ChangeNotifierProvider(
+      create: (_) => CustomerProvider(),
     ),
     Provider(
       create: (_) => MyRoute(),
